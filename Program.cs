@@ -1,4 +1,5 @@
 using Cinemanage.Data;
+using Cinemanage.Models.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+var appSettings = builder.Configuration.GetSection("AppSettings");
+
+builder.Services.Configure<AppSettings>(appSettings);
 
 var app = builder.Build();
 

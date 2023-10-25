@@ -10,7 +10,5 @@ namespace Cinemanage.Models.ViewModels
         public MovieSearch? TopRated { get; set; }
         public MovieSearch? Upcoming { get; set; }
 
-
-
     }
 }

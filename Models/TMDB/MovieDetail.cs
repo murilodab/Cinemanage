@@ -66,8 +66,6 @@
         public string name { get; set; }
     }
 
-
-
     public class Credits
     {
         public Cast[] cast { get; set; }
@@ -181,11 +179,11 @@
 
     public class Release_Date
     {
-        public string certification { get; set; }
-        public object[] descriptors { get; set; }
-        public string iso_639_1 { get; set; }
-        public string note { get; set; }
-        public string release_date { get; set; }
+        public string? certification { get; set; }
+        public object[]? descriptors { get; set; }
+        public string? iso_639_1 { get; set; }
+        public string? note { get; set; }
+        public string? release_date { get; set; }
         public int type { get; set; }
     }
 

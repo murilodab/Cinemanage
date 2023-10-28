@@ -4,9 +4,9 @@ namespace Cinemanage.Services
 {
     public class ConnectionService
     {
-        public static string GetConnectionString(IConfiguration configuration)
+        public static string GetConnectionString(IConfiguration Configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 

@@ -5,9 +5,7 @@ namespace Cinemanage.Models.Database
     public class MovieCast
     {
         public int Id { get; set; }
-
-
-        public string? MovieId { get; set; }
+        public int MovieId { get; set; }
 
         public int CastId { get; set; }
 

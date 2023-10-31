@@ -3,13 +3,14 @@ using Cinemanage.Models.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Cinemanage.Services;
+using Cinemanage.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // Add services to the container.
 var connectionString = ConnectionService.GetConnectionString(builder.Configuration) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+
 
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
@@ -19,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
@@ -28,7 +29,15 @@ var appSettings = builder.Configuration.GetSection("AppSettings");
 
 builder.Services.Configure<AppSettings>(appSettings);
 
+builder.Services.AddTransient<SeedService>();
+
 var app = builder.Build();
+
+var dataService = app.Services.CreateScope()
+                              .ServiceProvider
+                              .GetRequiredService<SeedService>();
+
+await dataService.ManageDataAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

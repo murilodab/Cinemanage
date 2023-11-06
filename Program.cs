@@ -34,6 +34,8 @@ builder.Services.AddTransient<SeedService>();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IRemoteMovieService, TMDBMovieService>();
 
+builder.Services.AddScoped<IDataMappingService, TMDBMappingService>();
+
 var app = builder.Build();
 
 var dataService = app.Services.CreateScope()

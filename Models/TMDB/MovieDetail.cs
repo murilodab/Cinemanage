@@ -19,16 +19,19 @@
         public string poster_path { get; set; }
         public Production_Companies[] production_companies { get; set; }
         public Production_Countries[] production_countries { get; set; }
-        public string release_date { get; set; }
+        public Release_Date? release_date { get; set; }
+        public Release_Dates? release_dates { get; set; }
         public int revenue { get; set; }
         public int runtime { get; set; }
         public Spoken_Languages[] spoken_languages { get; set; }
         public string status { get; set; }
         public string tagline { get; set; }
         public string title { get; set; }
-        public bool video { get; set; }
+        public Videos? video { get; set; }
         public float vote_average { get; set; }
         public int vote_count { get; set; }
+
+        public Credits? credits { get; set; }
     }
 
     public class Belongs_To_Collection

@@ -13,6 +13,7 @@ namespace Cinemanage.Models.Database
         public string? TagLine { get; set; }
         public string? Overview { get; set; }
         public int? RunTime { get; set; }
+      
 
         [DataType(DataType.Date)]
         [Display(Name = "Release Date")]

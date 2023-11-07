@@ -1,4 +1,5 @@
-﻿using Cinemanage.Services.Interfaces;
+﻿using Cinemanage.Models.TMDB;
+using Cinemanage.Services.Interfaces;
 
 namespace Cinemanage.Services
 {
@@ -12,19 +13,32 @@ namespace Cinemanage.Services
             _httpClient = httpClient;
         }
 
-        public string DecodeImage(byte[] oster, string contentType)
+        public string DecodeImage(byte[] poster, string contentType)
         {
-            throw new NotImplementedException();
+            if (poster == null) return null;
+            var posterImage = Convert.ToBase64String(poster);
+            return $"data:{contentType};base64,{posterImage}";
         }
 
-        public Task<byte[]> EncodeImageAsync(IFormFile poster)
+        public async Task<byte[]> EncodeImageAsync(IFormFile poster)
         {
-            throw new NotImplementedException();
+            if (poster == null) return null;
+
+            using var ms = new MemoryStream();
+            await poster.CopyToAsync(ms);
+            return ms.ToArray();
         }
 
-        public Task<byte[]> EncodeImageURLAsync(string imageURL)
+        public async Task<byte[]> EncodeImageURLAsync(string imageURL)
         {
-            throw new NotImplementedException();
+            var client = _httpClient.CreateClient();
+            var response = await client.GetAsync(imageURL);
+            using Stream stream = await response.Content.ReadAsStreamAsync();
+
+            var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            return ms.ToArray();
+
         }
     }
 }

@@ -10,7 +10,7 @@
         public int Order {  get; set; }
 
         public Collection? Collection { get; set; }
-        public Movie? Moview { get; set; }
+        public Movie? Movie { get; set; }
 
 
     }

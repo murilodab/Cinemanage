@@ -90,7 +90,7 @@ namespace Cinemanage.Services
         }
 
 
-        public async Task<MovieSearch> SearchMovieAsync(MovieCategory category, int count)
+        public async Task<MovieSearch> SearchMoviesAsync(MovieCategory category, int count)
         {
             //Step1: setup a default instance of MovieSearch
             MovieSearch movieSearch = new();

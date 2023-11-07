@@ -4,7 +4,7 @@
     {
         now_playing,
         popular,
-        top_reated,
+        top_rated,
         upcoming
     }
 }

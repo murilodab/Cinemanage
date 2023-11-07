@@ -82,7 +82,7 @@ namespace Cinemanage.Services
                 });
 
                 var crewMembers = movie.credits.crew.OrderByDescending(c => c.popularity)
-                                                    .GroupBy(c => c.cast_id)
+                                                    .GroupBy(c => c.id)
                                                     .Select(g => g.FirstOrDefault())
                                                     .Take(20)
                                                     .ToList();

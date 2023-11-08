@@ -3,7 +3,7 @@ using Cinemanage.Models.Database;
 using Cinemanage.Models.Settings;
 using Cinemanage.Models.TMDB;
 using Cinemanage.Services.Interfaces;
-
+using Microsoft.Extensions.Options;
 
 namespace Cinemanage.Services
 {
@@ -12,9 +12,9 @@ namespace Cinemanage.Services
         private AppSettings _appSettings;
         private readonly IImageService _imageService;
 
-        public TMDBMappingService(AppSettings appSettings, IImageService imageService)
+        public TMDBMappingService(IOptions<AppSettings> appSettings, IImageService imageService)
         {
-            _appSettings = appSettings;
+            _appSettings = appSettings.Value;
             _imageService = imageService;
         }
 

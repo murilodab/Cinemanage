@@ -38,9 +38,7 @@ namespace Cinemanage.Controllers
                 Upcoming = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.upcoming, count)
             };
             
-            
-            
-            
+                       
             return View(data);
         }
 

@@ -10,7 +10,7 @@
         public int budget { get; set; }
         public Genre[] genres { get; set; }
         public string homepage { get; set; }
-        public int id { get; set; }
+        public int Id { get; set; }
         public string imdb_id { get; set; }
         public string original_language { get; set; }
         public string original_title { get; set; }

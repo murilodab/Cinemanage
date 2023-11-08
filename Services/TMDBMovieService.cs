@@ -57,7 +57,7 @@ namespace Cinemanage.Services
 
         public async Task<MovieDetail> MovieDetailAsync(int id)
         {
-            // Step1: setup a default instance of MovieSearch
+            // Step1: setup a default instance of MovieDetail
             MovieDetail movieDetail = new();
 
             //Step2: Assemble the full request uri string

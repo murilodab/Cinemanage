@@ -46,7 +46,7 @@ namespace Cinemanage.Services
             {
                 newMovie = new Movie()
                 {
-                    MovieId = movie.id,
+                    MovieId = movie.Id,
                     Title = movie.title,
                     TagLine = movie.tagline,
                     Overview = movie.overview,

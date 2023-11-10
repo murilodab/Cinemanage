@@ -68,7 +68,7 @@ namespace Cinemanage.Services
             {
                 {"api_key", _appSettings.CinemanageSettings.TMDBApiKey },
                 {"language", _appSettings.TMDBSettings.QueryOptions.Language },
-                {"page", _appSettings.TMDBSettings.QueryOptions.Page }
+                {"append_to_response", _appSettings.TMDBSettings.QueryOptions.AppendToResponse }
             };
 
             var requestUri = QueryHelpers.AddQueryString(query, queryParams);
@@ -85,7 +85,7 @@ namespace Cinemanage.Services
                 var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 
-                movieDetail = (MovieDetail)dcjs.ReadObject(responseStream);
+                movieDetail = dcjs.ReadObject(responseStream) as MovieDetail;
                
             }
 

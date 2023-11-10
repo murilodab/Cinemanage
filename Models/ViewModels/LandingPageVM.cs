@@ -1,4 +1,5 @@
 ﻿using Cinemanage.Models.Database;
+using Cinemanage.Models.TMDB;
 
 namespace Cinemanage.Models.ViewModels
 {

@@ -25,7 +25,7 @@ namespace Cinemanage.Controllers
 
         public async Task<IActionResult> Index()
         {
-            const int count = 16;
+            const int count = 15;
             var data = new LandingPageVM()
             {
                 CustomCollections = await _context.Collection

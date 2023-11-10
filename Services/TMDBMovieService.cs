@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using System.Net.WebSockets;
 using System.Runtime.Intrinsics.X86;
 using System.Runtime.Serialization.Json;
+using System.Text.Json;
 
 namespace Cinemanage.Services
 {
@@ -81,9 +82,11 @@ namespace Cinemanage.Services
             if (response.IsSuccessStatusCode)
             {
 
-                using var responseStream = await response.Content.ReadAsStreamAsync();
                 var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
-                movieDetail = dcjs.ReadObject(responseStream) as MovieDetail;
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                
+                movieDetail = (MovieDetail)dcjs.ReadObject(responseStream);
+               
             }
 
             return movieDetail;

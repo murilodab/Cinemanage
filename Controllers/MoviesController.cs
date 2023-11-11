@@ -204,7 +204,7 @@ namespace Cinemanage.Controllers
         }
 
 
-        public async Task<IActionResult> Details(int? id, bool local = false)
+        public async Task<IActionResult> Details(int id, bool local = false)
         {
             if(id == null)
             {
@@ -222,7 +222,7 @@ namespace Cinemanage.Controllers
             else
             {
                 //Get the movie data from the TMDB API
-                var movieDetail = await _tmdbMovieService.MovieDetailAsync((int)id);
+                var movieDetail = await _tmdbMovieService.MovieDetailAsync(id);
                 movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
 
             }

@@ -78,13 +78,11 @@ namespace Cinemanage.Services
             var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
             var response = await client.SendAsync(request);
 
-            //Step4: Return the MovieSearch object
+            //Step4: Deserialize into MovieDetail
             if (response.IsSuccessStatusCode)
             {
-
-                var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
                 using var responseStream = await response.Content.ReadAsStreamAsync();
-                
+                var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
                 movieDetail = dcjs.ReadObject(responseStream) as MovieDetail;
                
             }

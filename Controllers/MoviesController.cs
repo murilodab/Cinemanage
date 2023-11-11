@@ -1,6 +1,7 @@
 ﻿using Cinemanage.Data;
 using Cinemanage.Models.Database;
 using Cinemanage.Models.Settings;
+using Cinemanage.Models.TMDB;
 using Cinemanage.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -43,7 +44,7 @@ namespace Cinemanage.Controllers
             if (_context.Movie.Any(m => m.MovieId == id))
             {
                 var localMovie = await _tmdbMovieService.MovieDetailAsync(id);
-                return RedirectToAction("Details", "Movies", new { id = localMovie.Id, local = true });
+                return RedirectToAction("Details", "Movies", new { id = localMovie.id, local = true });
             }
 
             //Get the raw data from the API
@@ -210,7 +211,7 @@ namespace Cinemanage.Controllers
             {
                 return NotFound();
             }
-
+            MovieDetail movieDetail = new();
             Movie movie = new();
             if (local)
             {
@@ -222,7 +223,8 @@ namespace Cinemanage.Controllers
             else
             {
                 //Get the movie data from the TMDB API
-                var movieDetail = await _tmdbMovieService.MovieDetailAsync(id);
+                
+                movieDetail = await _tmdbMovieService.MovieDetailAsync(id);
                 movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
 
             }

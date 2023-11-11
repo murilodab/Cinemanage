@@ -2,11 +2,8 @@
 using Cinemanage.Models.Settings;
 using Cinemanage.Models.TMDB;
 using Cinemanage.Services.Interfaces;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
-using System.Net.WebSockets;
-using System.Runtime.Intrinsics.X86;
 using System.Runtime.Serialization.Json;
 using System.Text.Json;
 
@@ -59,7 +56,7 @@ namespace Cinemanage.Services
         public async Task<MovieDetail> MovieDetailAsync(int id)
         {
             // Step1: setup a default instance of MovieDetail
-            MovieDetail movieDetail = new();
+            MovieDetail movieDetail = new MovieDetail();
 
             //Step2: Assemble the full request uri string
             var query = $"{_appSettings.TMDBSettings.BaseUrl}/movie/{id}";
@@ -83,7 +80,8 @@ namespace Cinemanage.Services
             {
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
-                movieDetail = dcjs.ReadObject(responseStream) as MovieDetail;
+                
+                movieDetail = (MovieDetail)dcjs.ReadObject(responseStream);
                
             }
 

@@ -44,23 +44,24 @@ namespace Cinemanage.Services
 
             try
             {
-                newMovie = new Movie()
+              newMovie = new Movie()
                 {
-                    MovieId = movie.Id,
-                    Title = movie.title,
-                    TagLine = movie.tagline,
-                    Overview = movie.overview,
-                    RunTime = movie.runtime,
-                    VoteAverage = movie.vote_average,
-                    ReleaseDate = DateTime.Parse(movie.release_date.release_date),
-                    TrailerUrl = BuildTrailerPath(movie.video),
-                    Backdrop = await EncodeBackdropImageAsync(movie.backdrop_path),
-                    BackdropType = BuildImageType(movie.backdrop_path),
-                    Poster = await EncodePosterImageAsync(movie.poster_path),
-                    Rating = GetRating(movie.release_dates)
+                  MovieId = movie.id,
+                  Title = movie.title,
+                  TagLine = movie.tagline,
+                  Overview = movie.overview,
+                  RunTime = movie.runtime,
+                  Backdrop = await EncodeBackdropImageAsync(movie.backdrop_path),
+                  BackdropType = BuildImageType(movie.backdrop_path),
+                  Poster = await EncodePosterImageAsync(movie.poster_path),
+                  PosterType = BuildImageType(movie.poster_path),
+                  Rating = GetRating(movie.release_dates),
+                  ReleaseDate = DateTime.Parse(movie.release_date),
+                  TrailerUrl = BuildTrailerPath(movie.videos),
+                  VoteAverage = movie.vote_average
 
 
-                };
+              };
 
                 var castMembers = movie.credits.cast.OrderByDescending(c => c.popularity)
                                                     .GroupBy(c => c.cast_id)
@@ -121,6 +122,7 @@ namespace Cinemanage.Services
         private MovieRating GetRating(Release_Dates dates)
         {
             var movieRating = MovieRating.NR;
+           
             var certification = dates.results.FirstOrDefault(r => r.iso_3166_1 == "US");
             if (certification is not null)
             {
@@ -164,3 +166,16 @@ namespace Cinemanage.Services
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

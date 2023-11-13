@@ -3,122 +3,122 @@
 @inject IImageService _imageService
 @model Movie
 
+
 @{
     ViewData["Title"] = "Movie Details";
 }
 
+<section>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <img src="@_imageService.DecodeImage(Model.Poster, Model.PosterType)" class="w-100" alt="..." />
+            </div>
 
-<div class="row">
-    <div class="col-sm-12 col-md-6">
-        <div class="row">
-            <img src="@_imageService.DecodeImage(Model.Poster, Model.PosterType)" class="w-100" alt="..." />
+            <div class="row">
+                <button class="btn btn-lg w-100 btn-danger" data-bs-toggle="modal" data-bs-target="#trailer">
+                    Watch Trailer
+                </button>
+            </div>
         </div>
 
-        <div class="row">
-            <button class="btn btn-lg w-100 btn-danger" data-bs-toggle="modal" data-bs-target="#trailer">
-                Watch Trailer
-            </button>
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col h5">
+                    <span class="mr-2">TITLE: </span> @Model.Title
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="col h5">
+                    <span class="mr-2">RELEASED: </span> @Model.ReleaseDate.ToString("MMM dd, yyyy");
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+                <div class="col h5">
+                    <span class="mr-2">RATING: </span> @Model.Rating
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col h5">
+                    <span class="mr-2">REVIEWS: </span> @Model.VoteAverage.ToString("0.0") / 10
+                </div>
+            </div>
+            <hr />
+
+            <div class="row mt-3 mb-2">
+                <div class="col">
+                    <span class="h5">OVERVIEW: </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <span class="h5 ml-4">@Model.Overview</span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="col-sm-12 col-md-6">
-        <div class="row">
-            <div class="col h5">
-                <span class="mr-2">TITLE: </span> @Model.Title
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="row">
-            <div class="col h5">
-                <span class="mr-2">RELEASED: </span> @Model.ReleaseDate.ToString("MMM dd, yyyy");
-            </div>
-        </div>
-        <hr />
-
-        <div class="row">
-            <div class="col h5">
-                <span class="mr-2">RATING: </span> @Model.Rating
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col h5">
-                <span class="mr-2">REVIEWS: </span> @Model.VoteAverage / 10
-            </div>
-        </div>
-        <hr />
-
-        <div class="row mt-3 mb-2">
-            <div class="col">
-                <span class="h5">OVERVIEW: </span>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <span class="h5 ml-4">@Model.Overview</span>
-            </div>
+    <div class="row">
+        <div class="col">
+            <span class="h5">STARRING: </span>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class=col">
-        <span class="h5">STARRING: </span>
-    </div>
-</div>
 
     @foreach (var actor in Model.Cast.Take(5))
     {
-    <div class="row">
-        <div class="col">
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-2">
-                        <img src="@actor.ImageUrl" class="img-fluid" style="width: 10res" alt="cast-image">
-                    </div>
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <h5 class="card-title">Name: @actor.Name</h5>
-                            <p class="card-text">Character: @actor.Character</p>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-2">
+                            <img src="@actor.ImageUrl" class="img-fluid" style="width:10rem;" alt="cast-image">
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <h5 class="card-title">Name: @actor.Name</h5>
+                                <p class="card-text">Character: @actor.Character</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     }
+</section>
 
 
 <!--Youtube Trailer Modal -->
-<div class="modal fade" id="trailer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="trailerLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="trailer" tabindex="-1" aria-labelledby="trailerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fs-5" id="trailerLabel">@Model.Title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="embed-responsive embed-responsive-16by9">
-    @{
-        //Isolating the Key from the base url to use it as embed source
-        var key = Model.TrailerUrl.Split("=").Last();
-        var source = $"https://www.youtube.com/embed/{key}";
-    }
+            @* <div class="modal-body text-center"> *@
+                <div class="ratio ratio-16x9">
+                    @{
+                        //Isolating the Key from the base url to use it as embed source
+                        var key = Model.TrailerUrl.Split("=").Last();
+                        var source = $"https://www.youtube.com/embed/{key}";
+                    }
 
-                    <iframe width="560" height="315" src="@source"
-                            title="YouTube video player"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                    </iframe>
+                    <iframe src="@source" type="text/html"></iframe>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+           @*  </div> *@
+           
         </div>
     </div>
 </div>
+
+
+
+

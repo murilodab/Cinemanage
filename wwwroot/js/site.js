@@ -2,3 +2,6 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+$("#trailer").on('hide.bs.modal', function (e) {
+    $("#trailer iframe").attr("src", $("#trailer iframe").attr("src"));
+});

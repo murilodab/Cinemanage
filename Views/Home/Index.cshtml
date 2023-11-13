@@ -5,10 +5,11 @@
 }
 
 <section class="px-1">
+   @*  ----------- UPCOMING --------------- *@
     <div class="row">
         <span>UPCOMING</span>
     </div>
-    @* Display 3 movies for Large ViwPorts *@
+    @* Display 3 movies for Large ViEwPorts *@
     <div class="row triple-carousel">
         <div id="upcomingCarousel" class="carousel slide" data-bs-ride="carousel" data-touch="true">
             <div class="carousel-inner px-2">
@@ -92,6 +93,274 @@
             </button>
         </div>
     </div>
+
+    @*  ----------- NOW PLAYING --------------- *@
+    <div class="row">
+        <span>NOW PLAYING</span>
+    </div>
+    @* Display 3 movies for Large ViEwPorts *@
+    <div class="row triple-carousel">
+        <div id="nowPlayingCarousel" class="carousel slide" data-bs-ride="carousel" data-touch="true">
+            <div class="carousel-inner px-2">
+                @{
+                    classText = "active";
+                    for (var slide = 0; slide <= 4; slide++)
+                    {
+                        <div class="carousel-item @classText">
+                            <div class="row">
+                                @foreach (var movie in Model.NowPlaying.results.Skip(slide * 3).Take(3))
+                                {
+                                    <div class="col-4 p-2">
+                                        <div class="card h-100 border-2">
+                                            <img src="@movie.poster_path" class="d-block w-100" alt="...">
+                                            <div class="card-body d-flex flex-column p-2">
+                                                <h5 class="card-title text-truncate">@movie.title</h5>
+                                                <p class="card-text clamp-overview">@movie.overview</p>
+                                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id" class="btn btn-lg btn-warning mt-auto">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        classText = "";
+                    }
+
+                }
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#nowPlayingCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#nowPlayingCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    @* Display 1 movie for Small Viewports *@
+    <div class="row single-carousel">
+        <div id="nowPlayingCarousel1" class="carousel slide" data-bs-ride="carousel" data-touch="true">
+            <div class="carousel-inner px-2">
+                @{
+                    classText = "active";
+                    for (var slide = 0; slide <= 14; slide++)
+                    {
+                        <div class="carousel-item @classText">
+                            <div class="row">
+                                @foreach (var movie in Model.NowPlaying.results.Skip(slide * 1).Take(1))
+                                {
+                                    <div class="col-12 p-2">
+                                        <div class="card" style="min-height:300px;">
+                                            <img src="@movie.poster_path" class="d-block w-100" alt="...">
+                                            <div class="card-body d-flex flex-column p-2">
+                                                <h5 class="card-title text-truncate">@movie.title</h5>
+                                                <p class="card-text clamp-overview">@movie.overview</p>
+                                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id" class="btn btn-lg btn-warning mt-auto">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        classText = "";
+                    }
+
+                }
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#nowPlayingCarousel1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#nowPlayingCarousel1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    @*  ----------- POPULAR --------------- *@
+    <div class="row">
+        <span>POPULAR</span>
+    </div>
+    @* Display 3 movies for Large ViEwPorts *@
+    <div class="row triple-carousel">
+        <div id="popularCarousel" class="carousel slide" data-bs-ride="carousel" data-touch="true">
+            <div class="carousel-inner px-2">
+                @{
+                    classText = "active";
+                    for (var slide = 0; slide <= 4; slide++)
+                    {
+                        <div class="carousel-item @classText">
+                            <div class="row">
+                                @foreach (var movie in Model.Popular.results.Skip(slide * 3).Take(3))
+                                {
+                                    <div class="col-4 p-2">
+                                        <div class="card h-100 border-2">
+                                            <img src="@movie.poster_path" class="d-block w-100" alt="...">
+                                            <div class="card-body d-flex flex-column p-2">
+                                                <h5 class="card-title text-truncate">@movie.title</h5>
+                                                <p class="card-text clamp-overview">@movie.overview</p>
+                                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id" class="btn btn-lg btn-warning mt-auto">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        classText = "";
+                    }
+
+                }
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#popularCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#popularCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    @* Display 1 movie for Small Viewports *@
+    <div class="row single-carousel">
+        <div id="popularCarousel1" class="carousel slide" data-bs-ride="carousel" data-touch="true">
+            <div class="carousel-inner px-2">
+                @{
+                    classText = "active";
+                    for (var slide = 0; slide <= 14; slide++)
+                    {
+                        <div class="carousel-item @classText">
+                            <div class="row">
+                                @foreach (var movie in Model.Popular.results.Skip(slide * 1).Take(1))
+                                {
+                                    <div class="col-12 p-2">
+                                        <div class="card" style="min-height:300px;">
+                                            <img src="@movie.poster_path" class="d-block w-100" alt="...">
+                                            <div class="card-body d-flex flex-column p-2">
+                                                <h5 class="card-title text-truncate">@movie.title</h5>
+                                                <p class="card-text clamp-overview">@movie.overview</p>
+                                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id" class="btn btn-lg btn-warning mt-auto">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        classText = "";
+                    }
+
+                }
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#popularCarousel1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#popularCarousel1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    @*  ----------- TOP RATED --------------- *@
+    <div class="row">
+        <span>TOP RATED</span>
+    </div>
+    @* Display 3 movies for Large ViEwPorts *@
+    <div class="row triple-carousel">
+        <div id="topRatedCarousel" class="carousel slide" data-bs-ride="carousel" data-touch="true">
+            <div class="carousel-inner px-2">
+                @{
+                    classText = "active";
+                    for (var slide = 0; slide <= 4; slide++)
+                    {
+                        <div class="carousel-item @classText">
+                            <div class="row">
+                                @foreach (var movie in Model.TopRated.results.Skip(slide * 3).Take(3))
+                                {
+                                    <div class="col-4 p-2">
+                                        <div class="card h-100 border-2">
+                                            <img src="@movie.poster_path" class="d-block w-100" alt="...">
+                                            <div class="card-body d-flex flex-column p-2">
+                                                <h5 class="card-title text-truncate">@movie.title</h5>
+                                                <p class="card-text clamp-overview">@movie.overview</p>
+                                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id" class="btn btn-lg btn-warning mt-auto">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        classText = "";
+                    }
+
+                }
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#topRatedCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#topRatedCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    @* Display 1 movie for Small Viewports *@
+    <div class="row single-carousel">
+        <div id="topRatedCarousel1" class="carousel slide" data-bs-ride="carousel" data-touch="true">
+            <div class="carousel-inner px-2">
+                @{
+                    classText = "active";
+                    for (var slide = 0; slide <= 14; slide++)
+                    {
+                        <div class="carousel-item @classText">
+                            <div class="row">
+                                @foreach (var movie in Model.TopRated.results.Skip(slide * 1).Take(1))
+                                {
+                                    <div class="col-12 p-2">
+                                        <div class="card" style="min-height:300px;">
+                                            <img src="@movie.poster_path" class="d-block w-100" alt="...">
+                                            <div class="card-body d-flex flex-column p-2">
+                                                <h5 class="card-title text-truncate">@movie.title</h5>
+                                                <p class="card-text clamp-overview">@movie.overview</p>
+                                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id" class="btn btn-lg btn-warning mt-auto">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        classText = "";
+                    }
+
+                }
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#topRatedCarousel1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#topRatedCarousel1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
 </section>
 
 

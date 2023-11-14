@@ -17,35 +17,70 @@ html {
     min-height: 100%;
 }
 
-body, row {
-    margin-bottom: 60px;
+body {
+    margin-top: 100px;
+    background-color: #D6D6D6;
 }
 
-.clamp-overview {
+footer {
+    background-color: white;
+}
+
+nav {
+    background-color:white;
+}
+
+/*body, row {
+    margin-bottom: 60px;
+}*/
+
+
+@media screen and (min-width:576px) {
+    .carousel-inner {
+        display: flex;
+    }
+
+    .carousel-item {
+        display: flex;
+        margin-right: 0;
+        flex: 0 0 calc(100%/5);
+        
+    }
+}
+
+.carousel-inner {
+    padding: 1px;
+    
+}
+
+.card {
+    margin: 0 .5em;
+    width:180px;
+}
+
+/*.clamp-overview {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}*/
+
+
+/*.navbar {
+    position: relative;
+}*/
+
+.navLogo {
+    position: absolute;
+    left: 50%;
+    margin-left: -65px !important;
+    /* 50% of your logo width */
+    display: block;
 }
 
-.card-body {
-    object-fit: cover;
-    overflow: hidden;
-}
-
-    .card-body h5 {
-        height: 2rem;
-    }
-
-.carousel-control-prev {
-    width: 13%;
-}
-.carousel-control-next {
-    width: 13%;
-}
 /* // Show content for bigger viewpoints */
 @media screen and (min-width:900px), screen and (min-height:500px) {
-    .triple-carousel {
+    triple-carousel {
         display: block;
     }
 
@@ -61,6 +96,8 @@ body, row {
     }
 
     .single-carousel {
-        display: block;
+        display: none;
     }
 }
+
+

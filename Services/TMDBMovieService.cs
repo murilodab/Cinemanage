@@ -46,7 +46,7 @@ namespace Cinemanage.Services
             {
 
                 using var responseStream = await response.Content.ReadAsStreamAsync();
-                var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
+                var dcjs = new DataContractJsonSerializer(typeof(ActorDetail));
                 actorDetail = (ActorDetail)dcjs.ReadObject(responseStream);
             }
 

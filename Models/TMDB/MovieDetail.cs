@@ -33,6 +33,7 @@
         public Images images { get; set; }
         public Videos videos { get; set; }
         public Release_Dates release_dates { get; set; }
+        public Watch_Providers watch_providers { get; set; }
     }
 
     public class Belongs_To_Collection
@@ -135,7 +136,7 @@
 
     public class Production_Companies
     {
-        
+
         public string logo_path { get; set; }
         public string name { get; set; }
         public string origin_country { get; set; }
@@ -155,5 +156,48 @@
     }
 
 
+    public class Watch_Providers
+    {
+        public Provider_Results results { get; set; }
+    }
+
+    public class Provider_Results
+    {
+        
+        public US US { get; set; }
+       
+    }
+
+    public class US
+    {
+        public string link { get; set; }
+        public Buy68[] buy { get; set; }
+        public Rent40[] rent { get; set; }
+        public Flatrate70[] flatrate { get; set; }
+    }
+
+    public class Buy68
+    {
+        public string logo_path { get; set; }
+        public int provider_id { get; set; }
+        public string provider_name { get; set; }
+        public int display_priority { get; set; }
+    }
+
+    public class Rent40
+    {
+        public string logo_path { get; set; }
+        public int provider_id { get; set; }
+        public string provider_name { get; set; }
+        public int display_priority { get; set; }
+    }
+
+    public class Flatrate70
+    {
+        public string logo_path { get; set; }
+        public int provider_id { get; set; }
+        public string provider_name { get; set; }
+        public int display_priority { get; set; }
+    }
 
 }

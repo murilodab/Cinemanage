@@ -34,29 +34,72 @@ nav {
     margin-bottom: 60px;
 }*/
 
-
-@media screen and (min-width:576px) {
+/*@media screen and (min-width:576px) {*/
     .carousel-inner {
+        padding: 1em;
         display: flex;
+        -webkit-mask: linear-gradient(90deg,#0000,#000 5% 95%,#0000);
     }
 
     .carousel-item {
         display: flex;
-        margin-right: 0;
-        flex: 0 0 calc(100%/5);
-        
+        margin: 0;
+        flex: 0 0 content;
     }
+
+    .card {
+        margin: 0 .5em;
+        width: 180px;
+        background-color: transparent;
+    }
+
+/*}*/
+
+
+/*.carousel-inner {
+    padding: 1em;
+    -webkit-mask: linear-gradient(90deg,#0000,#000 5% 95%,#0000);
+}*/
+
+
+.carousel-control-prev, .carousel-control-next {
+    width: 2vh;
+    height: 20vh;
+    background-color: black;
+    border-radius: 10px;
+    top:13%;
+    /*transform: translateY(-50%);*/
+    opacity:.5;
+
 }
 
-.carousel-inner {
-    padding: 1px;
-    
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+  
+    opacity: .8;
+}
+/*.card {
+    margin:auto;
+    padding:0;
+    width: 180px;
+    background-color: transparent;
+}*/
+
+
+.card-body a {
+    text-decoration: none;
+    font-weight: bolder;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
 }
 
-.card {
-    margin: 0 .5em;
-    width:180px;
-}
+    .card-body a:hover {
+        color: #FC3635;
+    }
+    .card img {
+        border-radius: 10px;
+        box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, .50);
+    }
 
 /*.clamp-overview {
     display: -webkit-box;
@@ -78,26 +121,7 @@ nav {
     display: block;
 }
 
-/* // Show content for bigger viewpoints */
-@media screen and (min-width:900px), screen and (min-height:500px) {
-    triple-carousel {
-        display: block;
-    }
-
-    .single-carousel {
-        display: none;
-    }
-}
-
-/* // Show notice for smaller viewpoints */
-@media screen and (max-width:900px), screen and (max-height:500px) {
-    .triple-carousel {
-        display: none;
-    }
-
-    .single-carousel {
-        display: none;
-    }
-}
-
+/*#upcoming{
+    background-color:black;
+}*/
 

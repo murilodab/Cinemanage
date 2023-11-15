@@ -31,6 +31,8 @@ namespace Cinemanage.Models.Database
 
         public string? TrailerUrl {  get; set; }
 
+
+
         [NotMapped]
         [Display(Name = "Poster Image")]
         public IFormFile? PosterFile { get; set; }

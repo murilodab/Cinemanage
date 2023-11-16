@@ -1,4 +1,8 @@
-﻿namespace Cinemanage.Models.TMDB
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace Cinemanage.Models.TMDB
 {
 
 
@@ -33,7 +37,9 @@
         public Images images { get; set; }
         public Videos videos { get; set; }
         public Release_Dates release_dates { get; set; }
-        public Watch_Providers watch_providers { get; set; }
+
+        [JsonPropertyName("watch/providers")]
+        public WatchProviders watchproviders { get; set; }
     }
 
     public class Belongs_To_Collection
@@ -156,7 +162,7 @@
     }
 
 
-    public class Watch_Providers
+    public class WatchProviders
     {
         public Provider_Results results { get; set; }
     }
@@ -201,3 +207,31 @@
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -218,6 +218,7 @@ namespace Cinemanage.Controllers
                 //Get the Movie Data straight from the DB
                 movie = await _context.Movie.Include(m => m.Cast)
                                             .Include(m => m.Crew)
+                                            .Include(m => m.Watch_Provider)
                                             .FirstOrDefaultAsync(m => m.Id == id);
             }
             else

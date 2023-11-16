@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <div class="row">
-                <img src="@_imageService.DecodeImage(Model.Poster, Model.PosterType)" class="w-100" alt="..." />
+                <img src="@_imageService.DecodeImage(Model.Backdrop, Model.BackdropType)" class="w-100" alt="..." />
             </div>
 
             <div class="row">
@@ -62,7 +62,32 @@
                     <span class="h5 ml-4">@Model.Overview</span>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col h5">
+                    <span class="mr-2">WHERE TO WATCH: </span>
+                </div>
+            </div>
+
+            @foreach (var provider in Model.Watch_Provider)
+            {
+                <div class="row">
+                    <div class="col">
+
+                        <span>@provider.Name</span>
+
+                        <img src="@provider.LogoUrl" class="img-fluid" width="80px"alt="provider-logo">
+
+
+
+                    </div>
+                </div>
+            }
+
         </div>
+
+
+
     </div>
 
     <div class="row">
@@ -104,17 +129,17 @@
                 </button>
             </div>
             @* <div class="modal-body text-center"> *@
-                <div class="ratio ratio-16x9">
-                    @{
-                        //Isolating the Key from the base url to use it as embed source
-                        var key = Model.TrailerUrl.Split("=").Last();
-                        var source = $"https://www.youtube.com/embed/{key}";
-                    }
+            <div class="ratio ratio-16x9">
+                @{
+                    //Isolating the Key from the base url to use it as embed source
+                    var key = Model.TrailerUrl.Split("=").Last();
+                    var source = $"https://www.youtube.com/embed/{key}";
+                }
 
-                    <iframe src="@source" type="text/html"></iframe>
-                </div>
-           @*  </div> *@
-           
+                <iframe src="@source" type="text/html"></iframe>
+            </div>
+            @*  </div> *@
+
         </div>
     </div>
 </div>

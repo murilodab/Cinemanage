@@ -1,6 +1,7 @@
 ﻿using Cinemanage.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Cinemanage.Models.Database
 {
@@ -29,6 +30,9 @@ namespace Cinemanage.Models.Database
         public byte[]? Backdrop { get; set; }
         public string? BackdropType { get; set; }
 
+        public byte[]? ProviderLogo { get; set; }
+        public string? ProviderLogoType { get; set; }
+
         public string? TrailerUrl {  get; set; }
 
 
@@ -40,6 +44,9 @@ namespace Cinemanage.Models.Database
         [NotMapped]
         [Display(Name = "Backdrop Image")]
         public IFormFile? BackdropFile { get; set; }
+
+     
+        public ICollection<MovieProvider> Watch_Provider { get; set; } = new HashSet<MovieProvider>();
 
         public ICollection<MovieCollection>? Collections { get; set; } = new HashSet<MovieCollection>();
 

@@ -99,6 +99,21 @@ namespace Cinemanage.Services
                         ImageUrl = BuildCastImage(member.profile_path)
                     });
                 });
+
+                var watchProviders = movie.watchproviders.results.US.flatrate.OrderByDescending(c => c.provider_name)
+                                                    .GroupBy(c => c.provider_id)
+                                                    .Select(g => g.FirstOrDefault())
+                                                    .ToList();
+
+                watchProviders.ForEach(provider =>
+                {
+                    newMovie.Watch_Provider.Add(new MovieProvider()
+                    {
+                        ProviderId = provider.provider_id,
+                        Name = provider.provider_name,
+                        LogoUrl = BuildCastImage(provider.logo_path)
+                    });
+                });
             }
             catch (Exception ex)
             {

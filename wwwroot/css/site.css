@@ -47,7 +47,7 @@ nav {
         flex: 0 0 content;
     }
 
-    .card {
+    .carousel .card {
         margin: 0 .5em;
         width: 180px;
         background-color: transparent;
@@ -96,7 +96,7 @@ nav {
     .card-body a:hover {
         color: #FC3635;
     }
-    .card img {
+    .carousel .card img {
         border-radius: 10px;
         box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, .50);
     }

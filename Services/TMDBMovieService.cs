@@ -79,9 +79,12 @@ namespace Cinemanage.Services
             if (response.IsSuccessStatusCode)
             {
                 using var responseStream = await response.Content.ReadAsStreamAsync();
-                var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
+
+                //var dcjs = new DataContractJsonSerializer(typeof(MovieDetail));
                 
-                movieDetail = dcjs.ReadObject(responseStream) as MovieDetail;
+                //movieDetail = dcjs.ReadObject(responseStream) as MovieDetail;
+
+                movieDetail = JsonSerializer.Deserialize<MovieDetail>(responseStream);
                
             }
 

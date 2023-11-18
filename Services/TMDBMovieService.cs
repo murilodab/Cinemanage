@@ -4,8 +4,10 @@ using Cinemanage.Models.TMDB;
 using Cinemanage.Services.Interfaces;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
+using NuGet.Packaging.Signing;
 using System.Runtime.Serialization.Json;
 using System.Text.Json;
+using X.PagedList;
 
 namespace Cinemanage.Services
 {
@@ -126,5 +128,45 @@ namespace Cinemanage.Services
 
             return movieSearch;
         }
+
+        public async Task<MovieSearch> SearchMoviesAsync(string name)
+        {
+            //Step1: setup a default instance of MovieSearch
+            MovieSearch movieSearch = new();
+
+            //Step2: Assemble the full request uri string
+            var query = $"{_appSettings.TMDBSettings.BaseUrl}/search/movie?query={name}";
+
+            var queryParams = new Dictionary<string, string>()
+            {
+                {"api_key", _appSettings.CinemanageSettings.TMDBApiKey },
+                {"language", _appSettings.TMDBSettings.QueryOptions.Language },
+                {"page", _appSettings.TMDBSettings.QueryOptions.Page }
+            };
+
+            var requestUri = QueryHelpers.AddQueryString(query, queryParams);
+
+            //Step3: Create a client and execute the request
+            var client = _httpClient.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            var response = await client.SendAsync(request);
+
+           
+
+            //Step4: Return the MovieSearch object
+            if (response.IsSuccessStatusCode)
+            {
+                var dcjs = new DataContractJsonSerializer(typeof(MovieSearch));
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                movieSearch = (MovieSearch)dcjs.ReadObject(responseStream);
+
+                movieSearch.results = movieSearch.results.ToArray();
+                movieSearch.results.ToList().ForEach(r => r.poster_path = $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.CinemanageSettings.DefaultPosterSize}/{r.poster_path}");              
+            }
+
+            return movieSearch;
+        }
+
+
     }
 }

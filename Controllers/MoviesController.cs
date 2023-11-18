@@ -1,13 +1,19 @@
 ﻿using Cinemanage.Data;
+using Cinemanage.Enums;
 using Cinemanage.Models.Database;
 using Cinemanage.Models.Settings;
 using Cinemanage.Models.TMDB;
+using Cinemanage.Models.ViewModels;
+using Cinemanage.Services;
 using Cinemanage.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Options;
+using System.Configuration;
+using System.Drawing.Printing;
+using X.PagedList;
 
 namespace Cinemanage.Controllers
 {
@@ -204,7 +210,6 @@ namespace Cinemanage.Controllers
             return RedirectToAction("Library", "Movies");
         }
 
-
         public async Task<IActionResult> Details(int id, bool local = false)
         {
             if(id == null)
@@ -239,14 +244,25 @@ namespace Cinemanage.Controllers
             return View(movie);
         }
 
+        public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
+        {
+            var movies = new MovieSearch();
 
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                movies = await _tmdbMovieService.SearchMoviesAsync(searchTerm);
+            }
+
+            return View(movies);
+        }
 
         private bool MovieExists(int id)
         {
             return (_context.Movie?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
-
 
         private async Task AddToMovieCollection(int movieId, string collectionName)
         {

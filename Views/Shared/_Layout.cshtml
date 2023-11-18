@@ -27,6 +27,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Manage Collections
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Collections" asp-action="Index">Collections</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Posts" asp-action="Create">Create Post</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Blogs" asp-action="Index">Blogs</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Posts" asp-action="Index">Posts</a></li>
+                                </ul>
+
+                            </li>
+                        }
+
+
                     </ul>
 
                     <a asp-area="" asp-controller="Home" asp-action="Index" class="navLogo">

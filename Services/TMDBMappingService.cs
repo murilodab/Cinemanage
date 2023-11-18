@@ -44,24 +44,24 @@ namespace Cinemanage.Services
 
             try
             {
-              newMovie = new Movie()
+                newMovie = new Movie()
                 {
-                  MovieId = movie.id,
-                  Title = movie.title,
-                  TagLine = movie.tagline,
-                  Overview = movie.overview,
-                  RunTime = movie.runtime,
-                  Backdrop = await EncodeBackdropImageAsync(movie.backdrop_path),
-                  BackdropType = BuildImageType(movie.backdrop_path),
-                  Poster = await EncodePosterImageAsync(movie.poster_path),
-                  PosterType = BuildImageType(movie.poster_path),
-                  Rating = GetRating(movie.release_dates),
-                  ReleaseDate = DateTime.Parse(movie.release_date),
-                  TrailerUrl = BuildTrailerPath(movie.videos),
-                  VoteAverage = movie.vote_average
+                    MovieId = movie.id,
+                    Title = movie.title,
+                    TagLine = movie.tagline,
+                    Overview = movie.overview,
+                    RunTime = movie.runtime,
+                    Backdrop = await EncodeBackdropImageAsync(movie.backdrop_path),
+                    BackdropType = BuildImageType(movie.backdrop_path),
+                    Poster = await EncodePosterImageAsync(movie.poster_path),
+                    PosterType = BuildImageType(movie.poster_path),
+                    Rating = GetRating(movie.release_dates),
+                    ReleaseDate = DateTime.Parse(movie.release_date),
+                    TrailerUrl = BuildTrailerPath(movie.videos),
+                    VoteAverage = movie.vote_average
 
 
-              };
+                };
 
                 var castMembers = movie.credits.cast.OrderByDescending(c => c.popularity)
                                                     .GroupBy(c => c.cast_id)
@@ -123,6 +123,7 @@ namespace Cinemanage.Services
             return newMovie;
         }
 
+
         private string BuildCastImage(string profilePath)
         {
             if (string.IsNullOrEmpty(profilePath))
@@ -137,7 +138,7 @@ namespace Cinemanage.Services
         private MovieRating GetRating(Release_Dates dates)
         {
             var movieRating = MovieRating.NR;
-           
+
             var certification = dates.results.FirstOrDefault(r => r.iso_3166_1 == "US");
             if (certification is not null)
             {
@@ -156,10 +157,10 @@ namespace Cinemanage.Services
             var posterPath = $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.CinemanageSettings.DefaultPosterSize}/{path}";
             return await _imageService.EncodeImageURLAsync(posterPath);
         }
-       
+
         private string BuildImageType(string path)
         {
-            if(string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return path;
             }
@@ -171,7 +172,7 @@ namespace Cinemanage.Services
         private string BuildTrailerPath(Videos video)
         {
             var videoKey = video.results.FirstOrDefault(r => r.type.ToLower().Trim() == "trailer" && r.key != "")?.key;
-            return string.IsNullOrEmpty(videoKey) ? videoKey : $"{_appSettings.TMDBSettings.BaseYoutubePath}{videoKey}";       
+            return string.IsNullOrEmpty(videoKey) ? videoKey : $"{_appSettings.TMDBSettings.BaseYoutubePath}{videoKey}";
         }
 
         private async Task<byte[]> EncodeBackdropImageAsync(string path)

@@ -4,6 +4,19 @@
     ViewData["Title"] = "Cinemanage";
 }
 
+<section id="searchHeader">
+    <form role="search" asp-controller ="Movies" asp-action="SearchIndex">
+        <div class="input-group">
+            <input type="text" class="form-control me-2" name="SearchTerm" placeholder="Search Movies" aria-label="Search">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+
 <section id="upcoming" class="px-1">
     @*  ----------- UPCOMING --------------- *@
     <div class="row">

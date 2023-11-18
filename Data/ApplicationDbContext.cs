@@ -1,4 +1,5 @@
 ﻿using Cinemanage.Models.Database;
+using Cinemanage.Models.TMDB;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

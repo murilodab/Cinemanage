@@ -6,6 +6,7 @@ namespace Cinemanage.Services.Interfaces
     {
         Task<MovieDetail> MovieDetailAsync(int id); 
         Task<MovieSearch> SearchMoviesAsync(Enums.MovieCategory category, int count);
+        Task<MovieSearch> SearchMoviesAsync(string name);
         Task<ActorDetail> ActorDetailAsync(int id);
     }
 }

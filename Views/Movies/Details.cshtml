@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <div class="row">
-                <img src="@_imageService.DecodeImage(Model.Backdrop, Model.BackdropType)" class="w-100" alt="..." />
+                <img src="@_imageService.DecodeImage(Model.Poster, Model.PosterType)" class="w-100" alt="..." />
             </div>
 
             <div class="row">
@@ -131,12 +131,24 @@
             @* <div class="modal-body text-center"> *@
             <div class="ratio ratio-16x9">
                 @{
+                    var source = "";
+                    bool flag = true;
                     //Isolating the Key from the base url to use it as embed source
-                    var key = Model.TrailerUrl.Split("=").Last();
-                    var source = $"https://www.youtube.com/embed/{key}";
+                    if(Model.TrailerUrl is not null)
+                    {
+                        var key = Model.TrailerUrl.Split("=").Last();
+                        source = $"https://www.youtube.com/embed/{key}";
+                        flag = false;
+                    }
+                    else
+                    {
+                        source = $"https://static.vecteezy.com/system/resources/thumbnails/023/103/916/small/not-available-rubber-stamp-seal-vector.jpg";
+                    }
+                    // var key = Model.TrailerUrl.Split("=").Last();
+                    // var source = $"https://www.youtube.com/embed/{key}";
                 }
 
-                <iframe src="@source" type="text/html"></iframe>
+                <iframe class="text-center" src="@source" type="text/html"></iframe>
             </div>
             @*  </div> *@
 

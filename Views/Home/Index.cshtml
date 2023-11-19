@@ -4,18 +4,42 @@
     ViewData["Title"] = "Cinemanage";
 }
 
-<section id="searchHeader">
-    <form role="search" asp-controller ="Movies" asp-action="SearchIndex">
-        <div class="input-group">
-            <input type="text" class="form-control me-2" name="SearchTerm" placeholder="Search Movies" aria-label="Search">
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-outline-success">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
+<div class="header-wrapper">
+
+    @{
+        var rand = new Random();
+        var imagePath = "";
+        foreach (var randomMovie in Model.NowPlaying.results.OrderBy(x => rand.Next()).Take(1))
+        {
+            imagePath = randomMovie.backdrop_path;
+        }
+    }
+
+
+    <img src="@imagePath" class="img-fluid w-100" />
+    <div class="row">
+        <div class="col-8">
+            <form role="search" asp-controller="Movies" asp-action="SearchIndex">
+                <div class="centered">
+                    <input type="text" class="form-control" name="SearchTerm" placeholder="Search Movies" aria-label="Search">
+                    
+                    <button type="submit" class="btn rounded-pill btn-outline-success">
+                        Search
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
-</section>
+       @*  <div class=col-4>
+            <button type="submit" class="btn rounded-pill btn-outline-success">
+                Search
+            </button>
+        </div> *@
+        
+
+       
+    </div>
+
+</div>
 
 <section id="upcoming" class="px-1">
     @*  ----------- UPCOMING --------------- *@

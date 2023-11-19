@@ -1,14 +1,17 @@
-﻿namespace Cinemanage.Models.TMDB
+﻿using X.PagedList;
+
+namespace Cinemanage.Models.TMDB
 {
 
 
 
     public class MovieSearch
     {
-        public int? page { get; set; }
+        public int page { get; set; }
         public MovieSearchResult[]? results { get; set; }
-        public int? total_pages { get; set; }
+        public int total_pages { get; set; }
         public int total_results { get; set; }
+        
     }
 
     public class MovieSearchResult
@@ -26,5 +29,7 @@
         public string? poster_path { get; set; }
         public float? vote_average { get; set; }
         public int? vote_count { get; set; }
+
+        public IPagedList<MovieSearchResult> movieSearches { get; set; }
     }
 }

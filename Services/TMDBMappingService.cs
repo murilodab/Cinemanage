@@ -100,20 +100,25 @@ namespace Cinemanage.Services
                     });
                 });
 
-                var watchProviders = movie.watchproviders.results.US.flatrate.OrderByDescending(c => c.provider_name)
+                if(movie.watchproviders.results.US != null)
+                {
+                    var watchProviders = movie.watchproviders.results.US.flatrate.OrderByDescending(c => c.provider_name)
                                                     .GroupBy(c => c.provider_id)
                                                     .Select(g => g.FirstOrDefault())
                                                     .ToList();
 
-                watchProviders.ForEach(provider =>
-                {
-                    newMovie.Watch_Provider.Add(new MovieProvider()
+                    watchProviders.ForEach(provider =>
                     {
-                        ProviderId = provider.provider_id,
-                        Name = provider.provider_name,
-                        LogoUrl = BuildCastImage(provider.logo_path)
+                        newMovie.Watch_Provider.Add(new MovieProvider()
+                        {
+                            ProviderId = provider.provider_id,
+                            Name = provider.provider_name,
+                            LogoUrl = BuildCastImage(provider.logo_path)
+                        });
                     });
-                });
+                }
+
+                
             }
             catch (Exception ex)
             {
@@ -124,7 +129,33 @@ namespace Cinemanage.Services
         }
 
 
-        private string BuildCastImage(string profilePath)
+        //public async Task<MovieSearchResult> MapMovieSearchAsync(MovieSearch movie)
+
+        //{
+        //    MovieSearchResult movieSearchResults = null;
+
+        //    try
+        //    {
+        //        var movieResults = movie.results.OrderByDescending(c => c.popularity)
+        //                                           .GroupBy(c => c.id)
+        //                                           .Select(c => c.FirstOrDefault())
+        //                                           .ToList();
+
+        //        movieResults.ForEach(r => 
+        //                        r.poster_path = $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.CinemanageSettings.DefaultPosterSize}/{r.poster_path}"
+                                
+        //                        );
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Exception in MapMovieDetailAsync: {ex.Message}");
+        //    }
+
+
+        //}
+
+            private string BuildCastImage(string profilePath)
         {
             if (string.IsNullOrEmpty(profilePath))
             {

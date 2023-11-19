@@ -159,7 +159,6 @@ namespace Cinemanage.Services
                 var dcjs = new DataContractJsonSerializer(typeof(MovieSearch));
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 movieSearch = (MovieSearch)dcjs.ReadObject(responseStream);
-
                 movieSearch.results = movieSearch.results.ToArray();
                 movieSearch.results.ToList().ForEach(r => r.poster_path = $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.CinemanageSettings.DefaultPosterSize}/{r.poster_path}");              
             }

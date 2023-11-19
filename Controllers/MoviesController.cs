@@ -248,15 +248,21 @@ namespace Cinemanage.Controllers
         {
             var movies = new MovieSearch();
 
-            var pageNumber = page ?? 1;
-            var pageSize = 10;
+            ViewData["SearchTerm"] = searchTerm;
 
-            if (!String.IsNullOrEmpty(searchTerm))
+
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            if (searchTerm is not null)
             {
-                movies = await _tmdbMovieService.SearchMoviesAsync(searchTerm);
+               movies = await _tmdbMovieService.SearchMoviesAsync(searchTerm);
+
             }
 
-            return View(movies);
+            var movieResults = movies.results.ToPagedListAsync(pageNumber, pageSize);
+
+            return View(await movieResults);
         }
 
         private bool MovieExists(int id)

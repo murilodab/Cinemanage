@@ -1,14 +1,16 @@
 ﻿@using Cinemanage.Models.TMDB
 @using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 
-@model MovieSearch
+@model IPagedList<MovieSearchResult>
 
 @{
     ViewData["Title"] = "Cinemanage";
 }
 
 @{
-    int searchResults = Model.total_results;
+    int searchResults = Model.TotalItemCount;
 }
 
 <div class="container-lg">
@@ -22,7 +24,7 @@
 
 
     <div id="blogContainer" class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var movie in Model.results)
+        @foreach (var movie in Model)
         {
             <div class="col">
                 <div class="card h-100" style="min-height: 30vh">
@@ -41,3 +43,23 @@
 
         }
     </div>
+
+
+    <!-- Paging Controls -->
+
+    <div class="row">
+        <div class="col h3">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col">
+        @Html.PagedListPager(Model, page => Url.Action("SearchIndex", new{page = page, searchTerm = ViewData["SearchTerm"]}),
+        new PagedListRenderOptions
+        {
+            LiElementClasses = new string[] {"page-item"},
+            PageClasses = new string[]{"page-link"}
+        })
+    </div>
+</div>

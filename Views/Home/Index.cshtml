@@ -4,7 +4,7 @@
     ViewData["Title"] = "Cinemanage";
 }
 
-<div class="header-wrapper">
+<section class="header-wrapper" id="imageHeader">
 
     @{
         var rand = new Random();
@@ -17,31 +17,22 @@
 
 
     <img src="@imagePath" class="img-fluid w-100" />
-    <div class="row">
-        <div class="col-8">
-            <form role="search" asp-controller="Movies" asp-action="SearchIndex">
-                <div class="centered">
-                    <input type="text" class="form-control" name="SearchTerm" placeholder="Search Movies" aria-label="Search">
-                    
-                    <button type="submit" class="btn rounded-pill btn-outline-success">
-                        Search
-                    </button>
-                </div>
-            </form>
-        </div>
-       @*  <div class=col-4>
-            <button type="submit" class="btn rounded-pill btn-outline-success">
-                Search
-            </button>
-        </div> *@
-        
 
-       
+    <div class="welcome-text">
+        <h1>Welcome to Cine Manage.</h1>
+        <h4>Search millions of movies, and CREATE your OWN COLLECTIONS!</h4>
     </div>
+        <form role="search" asp-controller="Movies" asp-action="SearchIndex">
+        <div class="input-group mb-3 centered">
+            <input type="text" class="form-control border-0" placeholder="Search Movies" name="searchTerm" aria-label="Movie Name" aria-describedby="Search-Term">
+            <button class="btn btn-success border-0" type="submit" id="searchButton">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        </form>  
+</section>
 
-</div>
-
-<section id="upcoming" class="px-1">
+<section id="upcoming" class="px-1 m-5">
     @*  ----------- UPCOMING --------------- *@
     <div class="row">
         <span>UPCOMING</span>

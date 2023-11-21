@@ -19,8 +19,13 @@ html {
 
 body {
     margin: 0;
-    margin-top: 100px;
+    padding: 0;
     background-color: #D6D6D6;
+}
+
+.row{
+    margin:0;
+    padding:0;
 }
 
 footer {
@@ -122,36 +127,48 @@ nav {
 }
 
 .header-wrapper {
+ 
     position: relative;
     text-align: center;
-    color: white;
+    background: black;;
 }
 
     .header-wrapper img {
-        max-height: 30vh;
+        max-height: 45vh;
         object-fit: cover;
+        opacity: 0.4;
+        
     }
 
 /* Centered text */
 .centered {
     position: absolute;
-    top: 70%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
     padding: 60px;
 }
-    .centered .form-control {
-        border-radius: 25px;
+    .centered .form-control{
+        border-top-left-radius: 25px !important;
+        border-bottom-left-radius: 25px !important;
     }
 
-    .centered .btn {
-        position: absolute;
-        top: 50%;
-        left: 89.4%;
-        transform: translate(-50%, -50%);
-        width: auto;
-    }
+.btn {
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+}
+
+.welcome-text {
+    text-align:left;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 60px;
+    color:white;
+}
 
     
 

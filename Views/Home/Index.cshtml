@@ -13,7 +13,7 @@
 }
 
 <section id="header" style="background-position:center;background-size:cover;background-image:url(@imagePath);">
-    <div class="home-header mb-3" style="background:rgba(0,0,0,0.3);">
+    <div class="home-header mb-3" style="background:rgba(0,0,0,0.6);">
         <div class="header-content">
             <div class="welcome-text">
                 <h1>Welcome to CineManage.</h1>
@@ -23,7 +23,7 @@
             <form role="search" asp-controller="Movies" asp-action="SearchIndex">
                 <div class="input-group">
                     <input type="text" class="form-control form-control-lg border-0" placeholder="Search Movies" name="searchTerm" aria-label="Movie Name" aria-describedby="Search-Term">
-                    <button class="btn btn-success border-0" type="submit" id="searchButton">
+                    <button class="btn border-0" type="submit" id="searchButton">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -31,7 +31,7 @@
         </div>
     </div>
 </section>
-
+<hr />
 <section id="upcoming" class="px-1">
     @*  ----------- UPCOMING --------------- *@
     <div class="row text-center">

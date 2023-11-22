@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap');
+
+
 html {
     font-size: 14px;
 }
@@ -20,12 +24,18 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-color: #D6D6D6;
+    background-color: #white;
 }
 
-.row{
-    margin:0;
-    padding:0;
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+
+.row {
+    margin: 0;
+    padding: 0;
 }
 
 footer {
@@ -126,33 +136,28 @@ nav {
     display: block;
 }
 
-.header-wrapper {
- 
-    position: relative;
-    text-align: center;
-    background: black;;
-}
-
-    .header-wrapper img {
-        max-height: 45vh;
-        object-fit: cover;
-        opacity: 0.4;
-        
-    }
-
-/* Centered text */
-.centered {
-    position: absolute;
-    top: 75%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.home-header {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:center no-repeat;
+    background-size: contain;
+    text-align: left;
+    height: 25em;
     width: 100%;
-    padding: 60px;
+    
 }
-    .centered .form-control{
-        border-top-left-radius: 25px !important;
-        border-bottom-left-radius: 25px !important;
-    }
+
+.header-content{
+    display:block;
+    flex:0 0 80%;
+}
+
+.form-control {
+
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+}
 
 .btn {
     border-top-right-radius: 25px !important;
@@ -160,17 +165,27 @@ nav {
 }
 
 .welcome-text {
-    text-align:left;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    padding: 60px;
-    color:white;
+    color: white;
+    margin-bottom: 5%;
+    font-family: 'Oleo Script', serif;
 }
 
-    
+    .welcome-text h1 {
+        font-size: 50px;
+    }
+
+.category-text {
+    color: black;
+    font-family: 'Oleo Script', serif;
+}
+
+#upcoming, #nowPlaying, #popular, #topRated {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+
 
 /*#upcoming{
     background-color:black;

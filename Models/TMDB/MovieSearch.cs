@@ -17,7 +17,7 @@ namespace Cinemanage.Models.TMDB
     public class MovieSearchResult
     {
         public string? backdrop_path { get; set; }
-        public string? first_air_date { get; set; }
+        public string? release_date { get; set; }
         public int[]? genre_ids { get; set; }
         public int? id { get; set; }
         public string? title { get; set; }

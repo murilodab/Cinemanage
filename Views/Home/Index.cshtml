@@ -37,15 +37,13 @@
 <hr />
 <section id="upcoming" class="px-1">
     @*  ----------- UPCOMING --------------- *@
-    <div class="row text-center">
 
-    </div>
     @* Display Upcoming Movies Carousel *@
-    <div class="row d-flex g-2">
-        <div class="col d-flex col-md-3 align-items-center text-center">
-            <h2 class="category-text">UPCOMING MOVIES</h2>
+    <div class="row row-cols-2 d-flex g-2">
+        <div class="col-1 d-flex justify-content-center">
+            <img class="category-image img-fluid" src="~/img/UPCOMING.png">
         </div>
-        <div class="col col-md-9">
+        <div class="col-11">
             <div id="upcomingCarousel" class="carousel h-100">
                 <div class="carousel-inner">
                     @{
@@ -80,134 +78,164 @@
                 </button>
             </div>
         </div>
+
+
+
     </div>
-  
+
 </section>
 
 <section id="nowPlaying" class="px-1">
     @*  ----------- NOW PLAYING --------------- *@
-    <div class="row text-center">
-        <h2 class="category-text">NOW PLAYING</h2>
+
+    <div class="row row-cols-2 d-flex g-2">
+        <div class="col-1 d-flex justify-content-center">
+            <img class="category-image img-fluid" src="~/img/NOWPLAYING.png">
+        </div>
+        <div class="col-11">
+            <div id="nowPlayingCarousel" class="carousel h-100">
+                <div class="carousel-inner">
+                    @{
+                        classText = "active";
+                        @foreach (var movie in Model.NowPlaying.results.Take(15))
+                        {
+                            <div class="carousel-item @classText">
+                                <div class="card text-center border-0">
+                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                        <img src="@movie.poster_path" class="img-fluid" alt="...">
+                                    </a>
+                                    <div class="card-body p-2">
+                                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                            <p class="mt-2">@movie.title</p>
+                                        </a>
+                                        <span class="text-muted mt-1">@movie.release_date</span>
+                                    </div>
+                                </div>
+                            </div>
+                            classText = "";
+                        }
+
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+       
     </div>
 
     @* Display Now Playing Movies Carousel *@
 
-    <div id="nowPlayingCarousel" class="carousel h-100">
-        <div class="carousel-inner">
-            @{
-                classText = "active";
-                @foreach (var movie in Model.NowPlaying.results.Take(15))
-                {
-                    <div class="carousel-item @classText">
-                        <div class="card text-center border-0">
-                            <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                <img src="@movie.poster_path" class="img-fluid" alt="...">
-                            </a>
-                            <div class="card-body p-2">
-                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                    <p class="mt-2">@movie.title</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    classText = "";
-                }
 
-            }
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
 </section>
 
 <section id="popular" class="px-1">
     @*  ----------- POPULAR --------------- *@
-    <div class="row text-center">
-        <h2 class="category-text">POPULAR</h2>
+
+    <div class="row row-cols-2 d-flex g-2">
+        <div class="col-1 d-flex justify-content-center">
+            <img class="category-image img-fluid" src="~/img/POPULAR.png">
+        </div>
+        <div class="col-11">
+            <div id="popularCarousel" class="carousel h-100">
+                <div class="carousel-inner">
+                    @{
+                        classText = "active";
+                        @foreach (var movie in Model.Popular.results.Take(15))
+                        {
+                            <div class="carousel-item @classText">
+                                <div class="card text-center border-0">
+                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                        <img src="@movie.poster_path" class="img-fluid" alt="...">
+                                    </a>
+                                    <div class="card-body p-2">
+                                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                            <p class="mt-2">@movie.title</p>
+                                        </a>
+                                        <span class="text-muted mt-1">@movie.release_date</span>
+                                    </div>
+                                </div>
+                            </div>
+                            classText = "";
+                        }
+
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
     </div>
+
 
     @* Display Popular Movies Carousel *@
 
-    <div id="popularCarousel" class="carousel h-100">
-        <div class="carousel-inner">
-            @{
-                classText = "active";
-                @foreach (var movie in Model.Popular.results.Take(15))
-                {
-                    <div class="carousel-item @classText">
-                        <div class="card text-center border-0">
-                            <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                <img src="@movie.poster_path" class="img-fluid" alt="...">
-                            </a>
-                            <div class="card-body p-2">
-                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                    <p class="mt-2">@movie.title</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    classText = "";
-                }
 
-            }
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
 </section>
 
 <section id="topRated" class="px-1">
     @*  ----------- TOP RATED --------------- *@
-    <div class="row text-center">
-        <h2 class="category-text">TOP RATED</h2>
-    </div>
 
-    @* Display Top Rated Movies Carousel *@
-
-    <div id="topRatedCarousel" class="carousel h-100">
-        <div class="carousel-inner">
-            @{
-                classText = "active";
-                @foreach (var movie in Model.TopRated.results.Take(15))
-                {
-                    <div class="carousel-item @classText">
-                        <div class="card text-center border-0">
-                            <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                <img src="@movie.poster_path" class="img-fluid" alt="...">
-                            </a>
-                            <div class="card-body p-2">
-                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                    <p class="mt-2">@movie.title</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    classText = "";
-                }
-
-            }
+    <div class="row row-cols-2 d-flex g-2">
+        <div class="col-1 d-flex justify-content-center flex-shrink-0">
+            <img class="category-image img-fluid" src="~/img/TOPRATED.png">
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        <div class="col-11">
+            @* Display Top Rated Movies Carousel *@
+
+            <div id="topRatedCarousel" class="carousel h-100">
+                <div class="carousel-inner">
+                    @{
+                        classText = "active";
+                        @foreach (var movie in Model.TopRated.results.Take(15))
+                        {
+                            <div class="carousel-item @classText">
+                                <div class="card text-center border-0">
+                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                        <img src="@movie.poster_path" class="img-fluid" alt="...">
+                                    </a>
+                                    <div class="card-body p-2">
+                                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                            <p class="mt-2">@movie.title</p>
+                                        </a>
+                                        <span class="text-muted mt-1">@movie.release_date</span>
+                                    </div>
+                                </div>
+                            </div>
+                            classText = "";
+                        }
+
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+      
     </div>
+
+
+
 </section>
 
 

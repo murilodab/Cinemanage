@@ -30,7 +30,7 @@ body {
 html, body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    background-color: #1e1e1e;
+    background-color: #1F2122;
     font-size: 16px;
     -ms-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -152,7 +152,7 @@ nav {
 
 .main-container {
     border-radius: 50px;
-    padding: 30px;
+    padding: 40px;
     margin: auto;
     background-color: #27292A;
 }
@@ -175,11 +175,11 @@ nav {
 }
     .home-header .btn {
         color: white;
-        background-color:black;
+        background-color: #27292A;
     }
 
         .home-header .btn:hover {
-            background-color: #F3C566;
+            background-color: #DF643A;
         }
 
 .header-content {
@@ -217,17 +217,18 @@ h2 em {
         font-size:20px;
     }
 
-.category-text {
-    color: #F3C566;
-    font-weight:bolder;
+
+.category-image{
+    position:relative;
+    max-height:250px;
+    min-width:38px;
+    width:auto;
+    height:auto;
+    margin-top:25px;
 }
 
 
 
-#upcoming, #nowPlaying, #popular, #topRated {
-    margin-left: 10px;
-    margin-right: 10px;
-}
 
 @media (max-width: 767px){
 

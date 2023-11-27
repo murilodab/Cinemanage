@@ -12,12 +12,15 @@
     }
 }
 
+
+
 <section id="header" style="background-position:center;background-size:cover;background-image:url(@imagePath);">
     <div class="home-header mb-3" style="background:rgba(0,0,0,0.6);">
         <div class="header-content">
             <div class="welcome-text">
-                <h1>Welcome to CineManage.</h1>
-                <h2>Search millions of movies, and CREATE your OWN COLLECTIONS!</h2>
+                <p>Welcome To CineManage.</p>
+                <h2><em>SEARCH</em> YOUR FAVORITE MOVIES.</h2>
+                <h2><em>CREATE</em> YOUR OWN COLLECTIONS.</h2>
             </div>
 
             <form role="search" asp-controller="Movies" asp-action="SearchIndex">
@@ -35,49 +38,56 @@
 <section id="upcoming" class="px-1">
     @*  ----------- UPCOMING --------------- *@
     <div class="row text-center">
-        <h1 class="category-text">UPCOMING</h1>
+
     </div>
     @* Display Upcoming Movies Carousel *@
-
-    <div id="upcomingCarousel" class="carousel h-100">
-        <div class="carousel-inner">
-            @{
-                var classText = "active";
-                @foreach (var movie in Model.Upcoming.results.OrderByDescending(x => x.release_date).Take(15))
-                {
-                    <div class="carousel-item @classText">
-                        <div class="card text-center border-0">
-                            <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                <img src="@movie.poster_path" class="img-fluid" alt="...">
-                            </a>
-                            <div class="card-body p-1">
-                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                    <p class="mt-2">@movie.title</p>
-                                </a>
-                                <span class="text-muted mt-1">@movie.release_date</span>
-                            </div>
-                        </div>
-                    </div>
-                    classText = "";
-                }
-
-            }
+    <div class="row d-flex g-2">
+        <div class="col d-flex col-md-3 align-items-center text-center">
+            <h2 class="category-text">UPCOMING MOVIES</h2>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        <div class="col col-md-9">
+            <div id="upcomingCarousel" class="carousel h-100">
+                <div class="carousel-inner">
+                    @{
+                        var classText = "active";
+                        @foreach (var movie in Model.Upcoming.results.OrderByDescending(x => x.release_date).Take(15))
+                        {
+                            <div class="carousel-item @classText">
+                                <div class="card text-center border-0">
+                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                        <img src="@movie.poster_path" class="img-fluid" alt="...">
+                                    </a>
+                                    <div class="card-body p-1">
+                                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
+                                            <p class="mt-2">@movie.title</p>
+                                        </a>
+                                        <span class="text-muted mt-1">@movie.release_date</span>
+                                    </div>
+                                </div>
+                            </div>
+                            classText = "";
+                        }
+
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
     </div>
+  
 </section>
 
 <section id="nowPlaying" class="px-1">
     @*  ----------- NOW PLAYING --------------- *@
     <div class="row text-center">
-        <h1 class="category-text">NOW PLAYING</h1>
+        <h2 class="category-text">NOW PLAYING</h2>
     </div>
 
     @* Display Now Playing Movies Carousel *@
@@ -119,7 +129,7 @@
 <section id="popular" class="px-1">
     @*  ----------- POPULAR --------------- *@
     <div class="row text-center">
-        <h1 class="category-text">POPULAR</h1>
+        <h2 class="category-text">POPULAR</h2>
     </div>
 
     @* Display Popular Movies Carousel *@
@@ -161,7 +171,7 @@
 <section id="topRated" class="px-1">
     @*  ----------- TOP RATED --------------- *@
     <div class="row text-center">
-        <h1 class="category-text">TOP RATED</h1>
+        <h2 class="category-text">TOP RATED</h2>
     </div>
 
     @* Display Top Rated Movies Carousel *@

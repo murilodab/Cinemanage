@@ -24,7 +24,17 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-color: black;
+    background-color: #1F2122;
+}
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    background-color: #1e1e1e;
+    font-size: 16px;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 main {
@@ -39,11 +49,11 @@ main {
 }
 
 footer {
-    background-color: #291B25;
+    background-color: #1F2122;
 }
 
 nav {
-    background-color: #291B25;
+    background-color: #1F2122;
 }
 
 .nav-link {
@@ -140,6 +150,17 @@ nav {
     display: block;
 }
 
+.main-container {
+    border-radius: 50px;
+    padding: 30px;
+    margin: auto;
+    background-color: #27292A;
+}
+
+#header{
+    border-radius:50px;
+}
+
 .home-header {
     display: flex;
     justify-content: center;
@@ -149,6 +170,8 @@ nav {
     text-align: left;
     height: 25em;
     width: 100%;
+    border-radius: 50px;
+ 
 }
     .home-header .btn {
         color: white;
@@ -177,16 +200,26 @@ nav {
 .welcome-text {
     color: white;
     margin-bottom: 5%;
-    font-family: 'Oleo Script', serif;
+    /*font-family: 'Oleo Script', serif;*/
 }
 
-    .welcome-text h1 {
-        font-size: 50px;
+    .welcome-text h2 {
+        font-weight:bolder;
+        font-size:45px;
+    }
+
+h2 em {
+    font-style: normal;
+    color: #DF643A;
+}
+
+    .welcome-text p{
+        font-size:20px;
     }
 
 .category-text {
     color: #F3C566;
-    font-family: 'Oleo Script', serif;
+    font-weight:bolder;
 }
 
 
@@ -194,6 +227,15 @@ nav {
 #upcoming, #nowPlaying, #popular, #topRated {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+@media (max-width: 767px){
+
+    .welcome-text h2 {
+        font-weight: bolder;
+        font-size: 30px;
+    }
+
 }
 
 

@@ -4,6 +4,7 @@ using Cinemanage.Models.Settings;
 using Cinemanage.Models.TMDB;
 using Cinemanage.Services.Interfaces;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 
 namespace Cinemanage.Services
 {
@@ -41,7 +42,7 @@ namespace Cinemanage.Services
         public async Task<Movie> MapMovieDetailAsync(MovieDetail movie)
         {
             Movie newMovie = null;
-
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
             try
             {
                 newMovie = new Movie()
@@ -56,7 +57,7 @@ namespace Cinemanage.Services
                     Poster = await EncodePosterImageAsync(movie.poster_path),
                     PosterType = BuildImageType(movie.poster_path),
                     Rating = GetRating(movie.release_dates),
-                    ReleaseDate = DateTime.Parse(movie.release_date),
+                    ReleaseDate = DateTime.Parse(movie.release_date, culture),
                     TrailerUrl = BuildTrailerPath(movie.videos),
                     VoteAverage = movie.vote_average
 

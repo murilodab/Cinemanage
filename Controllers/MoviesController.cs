@@ -89,7 +89,7 @@ namespace Cinemanage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MovieId,Title,TagLine,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Poster,PosterType,Backdrop,BackdropType,TrailerUrl")] Movie movie, int collectionId)
+        public async Task<IActionResult> Create([Bind("Id,MovieId,Title,TagLine,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Poster,PosterType,Backdrop,BackdropType,TrailerUrl")] Movie movie, string collectionId)
         {
             if (ModelState.IsValid)
             {
@@ -285,14 +285,35 @@ namespace Cinemanage.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToMovieCollection(int movieId, int collectionId)
+        public async Task<IActionResult> AddToMovieCollection()
         {
+
+            if (!ModelState.IsValid)
+            {
+                // Log or inspect ModelState errors
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                // Handle errors as needed
+            }
+
+            int collectionId = Convert.ToInt32(Request.Query["collectionId"]);
+            int movieId = Convert.ToInt32(Request.Query["movieId"]);
+
+            MovieDetail movieDetail = new();
+            Movie movie = new();
+
+            movieDetail = await _tmdbMovieService.MovieDetailAsync(movieId);
+            movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
+
+            var collection = await _context.Collection.FirstOrDefaultAsync(m => m.Id == collectionId);
+
             try
             {
                 var movieCollection = new MovieCollection
                 {
                     MovieId = movieId,
-                    CollectionId = collectionId
+                    CollectionId = collectionId,
+                    Collection = collection,
+                    Movie = movie 
                 };
 
                 _context.MovieCollection.Add(movieCollection);

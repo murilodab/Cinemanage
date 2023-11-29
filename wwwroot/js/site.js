@@ -6,26 +6,25 @@
 
 var dropdownItems = document.querySelectorAll('#collectionButton');
 
-dropdownItems.forEach(function (item) {
+dropdownItems.forEach(item => {
 
-    var collectionId = item.getAttribute('data-collectionId');
-    var movieId = item.getAttribute('data-movieId');
+    
 
     item.addEventListener('click', async () => {
+
+        var collectionId = item.getAttribute('data-collectionId');
+        var movieId = item.getAttribute('data-movieId');
 
         console.log('click');
         console.log('Collection ID:', collectionId);
         console.log('Movie ID:', movieId);
 
-        var res = await fetch('/Movies/AddToMovieCollection', {
+        var res = await fetch(`/Movies/AddToMovieCollection?collectionId=${collectionId}&movieId=${movieId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                movieId: parseInt(movieId),
-                collectionId: parseInt(collectionId),
-            }),
+           
         })
 
 

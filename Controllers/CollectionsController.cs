@@ -9,6 +9,7 @@ using Cinemanage.Data;
 using Cinemanage.Models.Database;
 using Cinemanage.Models.Settings;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinemanage.Controllers
 {
@@ -33,7 +34,12 @@ namespace Cinemanage.Controllers
             return View(collections);
         }
 
-        
+        // GET: Blogs/Create
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
 
         // POST: Collections/Create

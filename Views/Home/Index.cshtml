@@ -25,8 +25,8 @@
 
             <form role="search" asp-controller="Movies" asp-action="SearchIndex">
                 <div class="input-group">
-                    <input type="text" class="form-control form-control-lg border-0" placeholder="Search Movies" name="searchTerm" aria-label="Movie Name" aria-describedby="Search-Term">
-                    <button class="btn border-0" type="submit" id="searchButton">
+                    <input type="text" id="searchBarHeader" class="form-control form-control-lg border-0" placeholder="Search Movies" name="searchTerm" aria-label="Movie Name" aria-describedby="Search-Term">
+                    <button id="headerSearchBtn" class="btn border-0" type="submit" id="searchButton">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -52,9 +52,32 @@
                         {
                             <div class="carousel-item @classText">
                                 <div class="card text-center border-0">
-                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
-                                        <img src="@movie.poster_path" class="img-fluid" alt="...">
-                                    </a>
+                                    
+                                        <div>
+                                            <img src="@movie.poster_path" class="img-fluid" alt="...">
+                                            <div class="dropdown">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Add to collection
+                                                </a>
+
+                                                <ul class="dropdown-menu">
+                                                    @foreach (var collection in Model.CustomCollections)
+                                                    {
+                                                        if (!collection.Name.Equals("All"))
+                                                        {
+                                                        <li>
+                                                            <a class="dropdown-item" id="collectionButton" data-collectionId="@collection.Id" data-movieId="@movie.id">
+                                                                @collection.Name
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                    }
+
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    
                                     <div class="card-body p-1">
                                         <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.id">
                                             <p class="mt-2">@movie.title</p>
@@ -128,7 +151,7 @@
             </div>
         </div>
 
-       
+
     </div>
 
     @* Display Now Playing Movies Carousel *@
@@ -231,14 +254,6 @@
             </div>
         </div>
 
-      
+
     </div>
-
-
-
 </section>
-
-
-
-
-

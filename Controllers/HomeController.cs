@@ -5,6 +5,7 @@ using Cinemanage.Models.TMDB;
 using Cinemanage.Models.ViewModels;
 using Cinemanage.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -37,7 +38,7 @@ namespace Cinemanage.Controllers
                 TopRated = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.top_rated, count),
                 Upcoming = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.upcoming, count)
             };
-            
+            ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All"), "Id", "Name", data.CustomCollections);
                        
             return View(data);
         }

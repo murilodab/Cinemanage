@@ -142,12 +142,12 @@ namespace Cinemanage.Controllers
             {
                 try
                 {
-                    if(movie.PosterFile is not null)
+                    if (movie.PosterFile is not null)
                     {
                         movie.PosterType = movie.PosterFile.ContentType;
                         movie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile);
                     }
-                    if(movie.BackdropFile is not null)
+                    if (movie.BackdropFile is not null)
                     {
                         movie.BackdropType = movie.BackdropFile.ContentType;
                         movie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile);
@@ -168,7 +168,7 @@ namespace Cinemanage.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Movies", new {id = movie.Id, local = true});
+                return RedirectToAction("Details", "Movies", new { id = movie.Id, local = true });
             }
             return View(movie);
         }
@@ -212,7 +212,7 @@ namespace Cinemanage.Controllers
 
         public async Task<IActionResult> Details(int id, bool local = false)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -229,13 +229,13 @@ namespace Cinemanage.Controllers
             else
             {
                 //Get the movie data from the TMDB API
-                
+
                 movieDetail = await _tmdbMovieService.MovieDetailAsync(id);
                 movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
 
             }
 
-            if(movie == null)
+            if (movie == null)
             {
                 return NotFound();
             }
@@ -256,7 +256,7 @@ namespace Cinemanage.Controllers
 
             if (searchTerm is not null)
             {
-               movies = await _tmdbMovieService.SearchMoviesAsync(searchTerm);
+                movies = await _tmdbMovieService.SearchMoviesAsync(searchTerm);
 
             }
 
@@ -284,17 +284,31 @@ namespace Cinemanage.Controllers
             await _context.SaveChangesAsync();
         }
 
-        private async Task AddToMovieCollection(int movieId, int collectionId)
+        [HttpPost]
+        public async Task<IActionResult> AddToMovieCollection(int movieId, int collectionId)
         {
-            _context.Add(
-                new MovieCollection()
+            try
+            {
+                var movieCollection = new MovieCollection
                 {
-                    CollectionId = collectionId,
-                    MovieId = movieId
-                });
+                    MovieId = movieId,
+                    CollectionId = collectionId
+                };
 
-            await _context.SaveChangesAsync();
+                _context.MovieCollection.Add(movieCollection);
+
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, error = ex.Message });
+            }
+            
         }
+
 
 
     }

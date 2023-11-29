@@ -1,5 +1,6 @@
 ﻿using Cinemanage.Data;
 using Cinemanage.Models.Database;
+using Cinemanage.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -68,5 +69,7 @@ namespace Cinemanage.Controllers
 
             return RedirectToAction(nameof(Index), new { id });
         }
+
+        
     }
 }

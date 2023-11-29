@@ -12,6 +12,5 @@
         public Collection? Collection { get; set; }
         public Movie? Movie { get; set; }
 
-
     }
 }

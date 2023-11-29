@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cinemanage.Models.Database.Collection>
+﻿@model IEnumerable<Cinemanage.Models.Database.MovieCollection>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,26 +9,40 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@if (Model is not null)
+        {
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Order)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Collection)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+
+        
+
+
 @foreach (var item in Model) {
         <tr>
             <td>
-                    <a asp-action="Index" asp-controller="MovieCollections" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                @Html.DisplayFor(modelItem => item.Order)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Collection.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Movie.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -39,3 +53,9 @@
 }
     </tbody>
 </table>
+
+}
+else
+{
+    <h1>This List is EMPTY</h1>
+}

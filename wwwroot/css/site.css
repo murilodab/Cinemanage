@@ -154,7 +154,7 @@ nav {
     border-radius: 50px;
     padding: 40px;
     margin: auto;
-    background-color: #27292A;
+    background-color: white;
 }
 
 #header{
@@ -182,17 +182,17 @@ nav {
             background-color: #DF643A;
         }
 
-.header-content {
+.home-header .header-content {
     display: block;
     flex: 0 0 80%;
 }
 
-.form-control {
+#searchBarHeader {
     border-top-left-radius: 25px !important;
     border-bottom-left-radius: 25px !important;
 }
 
-.btn {
+#headerSearchBtn {
     border-top-right-radius: 25px !important;
     border-bottom-right-radius: 25px !important;
 }

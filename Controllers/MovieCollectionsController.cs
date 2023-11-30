@@ -44,21 +44,37 @@ namespace Cinemanage.Controllers
         //    return View();
         //}
 
-        public async Task<IActionResult> Index(int? page, int Id)
+        public async Task<IActionResult> Index(int? page, int? id)
         {
+
+            var collectionExists = _context.MovieCollection.Any(c => c.CollectionId == id);
+
+            if (!collectionExists)
+            {
+                return NotFound(); // or handle accordingly
+            }
+
             var pageNumber = page ?? 1;
             var pageSize = 5;
 
-            var movies = _context.MovieCollection.Where(c =>  c.Id == Id);
+            var movies = await _context.MovieCollection
+                                .Include(c => c.Collection)
+                                .Include(mc => mc.Movie)
+                                .Where(c => c.CollectionId == id)
+                                .OrderBy(m => m.Order) // or any other ordering you need
+                                .ToPagedListAsync(pageNumber, pageSize);
 
-            List<Movie> movieList = new();
+            if(movies.Any())
+{
+                var movieTitles = movies.Select(m => m.Movie.Title).ToList();
 
-            foreach(var movie in movies)
+            }
+            else
             {
-                
+                return NotFound();
             }
 
-    
+            
 
             return View(movies);
         }
@@ -90,6 +106,6 @@ namespace Cinemanage.Controllers
         //    return RedirectToAction(nameof(Index), new { id });
         //}
 
-        
+
     }
 }

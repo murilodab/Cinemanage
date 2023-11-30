@@ -3,6 +3,7 @@ using System;
 using Cinemanage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cinemanage.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231130113653_002")]
+    partial class _002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +146,6 @@ namespace Cinemanage.Data.Migrations
                     b.Property<int>("CollectionId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("MovieCollectionId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("MovieId")
                         .HasColumnType("integer");
 
@@ -155,8 +155,6 @@ namespace Cinemanage.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CollectionId");
-
-                    b.HasIndex("MovieCollectionId");
 
                     b.HasIndex("MovieId");
 
@@ -438,10 +436,6 @@ namespace Cinemanage.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cinemanage.Models.Database.MovieCollection", null)
-                        .WithMany("MovieCollectionsList")
-                        .HasForeignKey("MovieCollectionId");
-
                     b.HasOne("Cinemanage.Models.Database.Movie", "Movie")
                         .WithMany("Collections")
                         .HasForeignKey("MovieId")
@@ -538,11 +532,6 @@ namespace Cinemanage.Data.Migrations
                     b.Navigation("Crew");
 
                     b.Navigation("Watch_Provider");
-                });
-
-            modelBuilder.Entity("Cinemanage.Models.Database.MovieCollection", b =>
-                {
-                    b.Navigation("MovieCollectionsList");
                 });
 #pragma warning restore 612, 618
         }

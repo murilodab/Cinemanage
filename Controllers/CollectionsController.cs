@@ -41,6 +41,27 @@ namespace Cinemanage.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Collection == null)
+            {
+                return NotFound();
+            }
+
+            var collection = await _context.Collection
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (collection == null)
+            {
+                return NotFound();
+            }
+
+            if (collection.Name == _appSettings.CinemanageSettings.DefaultCollection.Name)
+            {
+                return RedirectToAction("Index", "Collections");
+            }
+
+            return View(collection);
+        }
 
         // POST: Collections/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

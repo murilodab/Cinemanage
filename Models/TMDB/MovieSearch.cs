@@ -30,6 +30,6 @@ namespace Cinemanage.Models.TMDB
         public float? vote_average { get; set; }
         public int? vote_count { get; set; }
 
-        public IPagedList<MovieSearchResult> movieSearches { get; set; }
+        public IPagedList<MovieSearchResult>? movieSearches { get; set; }
     }
 }

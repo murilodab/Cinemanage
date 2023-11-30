@@ -310,7 +310,7 @@ namespace Cinemanage.Controllers
             {
                 var movieCollection = new MovieCollection
                 {
-                    MovieId = movieId,
+                    MovieId = movie.Id,
                     CollectionId = collectionId,
                     Collection = collection,
                     Movie = movie 

@@ -313,8 +313,8 @@ namespace Cinemanage.Controllers
                     MovieId = movie.Id,
                     CollectionId = collectionId,
                     Collection = collection,
-                    Movie = movie 
-                };
+                    Movie = movie
+                                    };
 
                 _context.MovieCollection.Add(movieCollection);
 

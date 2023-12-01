@@ -1,5 +1,6 @@
 ﻿using Cinemanage.Data;
 using Cinemanage.Models.Database;
+using Cinemanage.Models.Settings;
 using Cinemanage.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -61,7 +62,7 @@ namespace Cinemanage.Controllers
                                 .Include(c => c.Collection)
                                 .Include(mc => mc.Movie)
                                 .Where(c => c.CollectionId == id)
-                                .OrderBy(m => m.Order) // or any other ordering you need
+                                .OrderBy(m => m.Movie.Title) // or any other ordering you need
                                 .ToPagedListAsync(pageNumber, pageSize);
 
             if(movies.Any())
@@ -73,10 +74,33 @@ namespace Cinemanage.Controllers
             {
                 return NotFound();
             }
-
             
+            ViewData["Title"] = movies.Select(c => c.Collection.Name).FirstOrDefault().ToString();
 
             return View(movies);
+        }
+
+        // POST: Collections/Delete/5
+        
+        public async Task<IActionResult> DeleteConfirmed(int id, int collectionId)
+        {
+            if (_context.Collection == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Collection'  is null.");
+            }
+
+            var movieCollection = _context.MovieCollection.Where(m => m.CollectionId == collectionId);
+
+            var movie = movieCollection.Select(m => m.Movie).Where(m => m.MovieId == id).FirstOrDefault();
+
+ 
+            if (movie != null)
+            {
+                _context.Movie.Remove(movie);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", new {id = collectionId});
         }
 
         //[HttpPost]

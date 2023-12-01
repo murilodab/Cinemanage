@@ -73,7 +73,7 @@ namespace Cinemanage.Controllers
             
                 _context.Add(collection);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "MovieCollections", new {id = collection.Id});     
+                return RedirectToAction("Index", "Collections", new {id = collection.Id});     
         }
 
         // GET: Collections/Edit/5
@@ -171,7 +171,7 @@ namespace Cinemanage.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "MovieCollections");
+            return RedirectToAction("Index", "Collections");
         }
 
         private bool CollectionExists(int id)

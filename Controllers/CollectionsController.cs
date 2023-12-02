@@ -10,6 +10,7 @@ using Cinemanage.Models.Database;
 using Cinemanage.Models.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Cinemanage.Controllers
 {
@@ -17,29 +18,40 @@ namespace Cinemanage.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly AppSettings _appSettings;
+        private readonly UserManager<AppUser> _userManager;
 
-        public CollectionsController(ApplicationDbContext context, IOptions<AppSettings> appSettings)
+        public CollectionsController(ApplicationDbContext context, IOptions<AppSettings> appSettings, UserManager<AppUser> userManager)
         {
             _context = context;
             _appSettings = appSettings.Value;
+            _userManager = userManager;
         }
 
+
+
         // GET: Collections
+        [Authorize]
         public async Task<IActionResult> Index()
         {
+
+            string appUserId = _userManager.GetUserId(User);
+
+            AppUser? appUser = _context.Users
+                                       .Include(c => c.Collections)
+                                       .ThenInclude(c => c.MovieCollections)
+                                       .FirstOrDefault(u => u.Id == appUserId);
+
             var defaultCollectionName = _appSettings.CinemanageSettings.DefaultCollection.Name;
-            var collections = await _context.Collection.Where(c => c.Name != defaultCollectionName).ToListAsync();
+
+            var collections = await _context.Collection.Where(c => c.AppUserId == appUserId)
+                                                       .Include(c => c.Name != defaultCollectionName)
+                                                       .ToListAsync();
             
             
             return View(collections);
         }
 
-        // GET: Blogs/Create
-        [Authorize(Roles = "Administrator")]
-        public IActionResult Create()
-        {
-            return View();
-        }
+       
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -63,17 +75,35 @@ namespace Cinemanage.Controllers
             return View(collection);
         }
 
+        // GET: Blogs/Create
+        [Authorize]
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+
         // POST: Collections/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Collection collection)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,AppUserId")] Collection collection)
         {
-            
+            ModelState.Remove("AppUserId");
+
+            if (ModelState.IsValid)
+            {
+                string appUserId = _userManager.GetUserId(User);
+                collection.AppUserId = appUserId;
+
+
                 _context.Add(collection);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Collections", new {id = collection.Id});     
+                return RedirectToAction("Index", "Collections", new { id = collection.Id });
+            }
+
+            return View(collection);
         }
 
         // GET: Collections/Edit/5
@@ -84,7 +114,11 @@ namespace Cinemanage.Controllers
                 return NotFound();
             }
 
-            var collection = await _context.Collection.FindAsync(id);
+            string appUserId = _userManager.GetUserId(User);
+
+            var collection = await _context.Collection.Where(c => c.Id == id && c.AppUserId == appUserId)
+                                            .FirstOrDefaultAsync();
+            
             if (collection == null)
             {
                 return NotFound();
@@ -97,7 +131,7 @@ namespace Cinemanage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Collection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description, AppUserId")] Collection collection)
         {
             if (id != collection.Id)
             {
@@ -112,6 +146,9 @@ namespace Cinemanage.Controllers
                     {
                         return RedirectToAction("Index", "Collections");
                     }
+
+                    string appUserId = _userManager.GetUserId(User);
+                    collection.AppUserId = appUserId;
 
                     _context.Update(collection);
                     await _context.SaveChangesAsync();
@@ -140,8 +177,12 @@ namespace Cinemanage.Controllers
                 return NotFound();
             }
 
+
+            string appUserId = _userManager.GetUserId(User);
+
             var collection = await _context.Collection
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id & m.AppUserId == appUserId);
+
             if (collection == null)
             {
                 return NotFound();
@@ -160,11 +201,17 @@ namespace Cinemanage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+
             if (_context.Collection == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Collection'  is null.");
             }
-            var collection = await _context.Collection.FindAsync(id);
+
+            string appUserId = _userManager.GetUserId(User);
+
+            var collection = await _context.Collection.FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
+            
             if (collection != null)
             {
                 _context.Collection.Remove(collection);

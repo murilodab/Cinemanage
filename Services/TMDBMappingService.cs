@@ -103,10 +103,7 @@ namespace Cinemanage.Services
 
                 if(movie.watchproviders.results.US != null)
                 {
-                    var watchProviders = movie.watchproviders.results.US.flatrate.OrderByDescending(c => c.provider_name)
-                                                    .GroupBy(c => c.provider_id)
-                                                    .Select(g => g.FirstOrDefault())
-                                                    .ToList();
+                    var watchProviders = movie.watchproviders.results.US.flatrate.ToList();
 
                     watchProviders.ForEach(provider =>
                     {

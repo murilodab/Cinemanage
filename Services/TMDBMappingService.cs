@@ -42,7 +42,7 @@ namespace Cinemanage.Services
         public async Task<Movie> MapMovieDetailAsync(MovieDetail movie)
         {
             Movie newMovie = null;
-            CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("en");
             try
             {
                 newMovie = new Movie()

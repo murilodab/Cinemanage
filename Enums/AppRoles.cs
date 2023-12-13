@@ -2,6 +2,7 @@
 {
     public enum AppRoles
     {
-        User
-    }
+        User,
+        Administrator
+    }   
 }

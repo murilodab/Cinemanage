@@ -59,17 +59,22 @@ namespace Cinemanage.Services
 
             var credentials = _appSettings.CinemanageSettings.DefaultCredentials;
 
-            var newUser = new AppUser()
+            //Admin
+            //Step 1: Creates a new instance of BlogUser
+            var adminUser = new AppUser()
             {
-                FirstName = credentials.FirstName,
-                LastName = credentials.LastName,
-                Email = credentials.Email,
-                UserName = credentials.Email,
+                Email = "mbtestcoder@gmail.com",
+                UserName = "mbtestcoder@gmail.com",
+                FirstName = "Murilo",
+                LastName = "Barbosa",
                 EmailConfirmed = true
             };
 
-            await _userManager.CreateAsync(newUser, credentials.Password);
-            await _userManager.AddToRoleAsync(newUser, credentials.Role);
+            //Step 2: Use the UserManager to create a new user that is defined by the adminUser
+            await _userManager.CreateAsync(adminUser, "@Admin5023");
+
+            //Step 3: Add this new user to the Administrator Role
+            await _userManager.AddToRoleAsync(adminUser, AppRoles.Administrator.ToString());
         }
 
         private async Task SeedCollections()

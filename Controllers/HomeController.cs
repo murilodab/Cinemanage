@@ -41,13 +41,14 @@ namespace Cinemanage.Controllers
                 NowPlaying = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.now_playing, count),
                 Popular = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.popular, count),
                 TopRated = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.top_rated, count),
-                Upcoming = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.upcoming, count)
+                Upcoming = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.upcoming, count),
+                CustomCollections = new List<Collection>()
             };
 
             if (appUser != null)
             {
                 data.CustomCollections = appUser.Collections.ToList();
-                ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All" && c.AppUserId == appUserId), "Id", "Name", data.CustomCollections);
+               
             }
             else
             {
@@ -56,7 +57,7 @@ namespace Cinemanage.Controllers
 
 
 
-            
+            ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All" && c.AppUserId == appUserId), "Id", "Name", data.CustomCollections);
 
             return View(data);
         }

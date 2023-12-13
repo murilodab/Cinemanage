@@ -66,7 +66,19 @@ namespace Cinemanage.Controllers
 
                 return View(data);
             }
-            return View();
+            
+            var data = new LandingPageVM()
+            {
+
+                NowPlaying = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.now_playing, count),
+                Popular = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.popular, count),
+                TopRated = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.top_rated, count),
+                Upcoming = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.upcoming, count),
+                CustomCollections = new List<Collection>()
+            };
+
+
+            return View(data);
         }
 
         public IActionResult Privacy()

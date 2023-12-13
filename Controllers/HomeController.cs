@@ -47,6 +47,7 @@ namespace Cinemanage.Controllers
             if (appUser != null)
             {
                 data.CustomCollections = appUser.Collections.ToList();
+                ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All" && c.AppUserId == appUserId), "Id", "Name", data.CustomCollections);
             }
             else
             {
@@ -55,8 +56,8 @@ namespace Cinemanage.Controllers
 
 
 
-            ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All"), "Id", "Name", data.CustomCollections);
-                       
+            
+
             return View(data);
         }
 

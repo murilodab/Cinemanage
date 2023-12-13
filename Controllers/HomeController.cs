@@ -67,7 +67,7 @@ namespace Cinemanage.Controllers
                 return View(data);
             }
             
-            var data = new LandingPageVM()
+            var data2 = new LandingPageVM()
             {
 
                 NowPlaying = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.now_playing, count),
@@ -78,7 +78,7 @@ namespace Cinemanage.Controllers
             };
 
 
-            return View(data);
+            return View(data2);
         }
 
         public IActionResult Privacy()

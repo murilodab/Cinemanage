@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Cinemanage-4dfa5d40-0503-423d-a268-728e02ad2850</UserSecretsId>
+	  <BaseOutputPath>bin</BaseOutputPath>
+	  <DockerDefaulTargetOS>Linux</DockerDefaulTargetOS>
+	  <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>

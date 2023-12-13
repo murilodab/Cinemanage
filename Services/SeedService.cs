@@ -1,4 +1,5 @@
 ﻿using Cinemanage.Data;
+using Cinemanage.Enums;
 using Cinemanage.Models.Database;
 using Cinemanage.Models.Settings;
 using Microsoft.AspNetCore.Identity;
@@ -40,9 +41,16 @@ namespace Cinemanage.Services
         {
             if (_dbContext.Roles.Any()) return;
 
-            var adminRole = _appSettings.CinemanageSettings.DefaultCredentials.Role;
+            foreach (var role in Enum.GetNames(typeof(AppRoles)))
+            {
+                //Use the Role Manager to create roles
+                await _roleManager.CreateAsync(new IdentityRole(role));
 
-            await _roleManager.CreateAsync(new IdentityRole(adminRole));
+            }
+
+            //var adminRole = _appSettings.CinemanageSettings.DefaultCredentials.Role;
+
+            //await _roleManager.CreateAsync(new IdentityRole(adminRole));
         }
 
         private async Task SeedUsersAsync()

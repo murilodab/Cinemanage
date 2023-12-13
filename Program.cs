@@ -8,7 +8,7 @@ using Cinemanage.Models.Database;
 using Cinemanage.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = ConnectionHelper.GetConnectionString(builder.Configurat) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = ConnectionHelper.GetConnectionString(builder.Configuration) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 // Add services to the container.
 

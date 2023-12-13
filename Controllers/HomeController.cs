@@ -33,33 +33,40 @@ namespace Cinemanage.Controllers
             const int count = 15;
             string appUserId = _userManager.GetUserId(User);
 
-            AppUser? appUser = await _context.Users.Include(u => u.Collections).FirstOrDefaultAsync(u => u.Id == appUserId);
-
-            var data = new LandingPageVM()
+            if (appUserId != null)
             {
-                
-                NowPlaying = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.now_playing, count),
-                Popular = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.popular, count),
-                TopRated = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.top_rated, count),
-                Upcoming = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.upcoming, count),
-                CustomCollections = new List<Collection>()
-            };
+                AppUser? appUser = await _context.Users.Include(u => u.Collections).FirstOrDefaultAsync(u => u.Id == appUserId);
 
-            if (appUser != null)
-            {
-                data.CustomCollections = appUser.Collections.ToList();
-               
+
+
+
+                var data = new LandingPageVM()
+                {
+
+                    NowPlaying = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.now_playing, count),
+                    Popular = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.popular, count),
+                    TopRated = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.top_rated, count),
+                    Upcoming = await _tmdbMovieService.SearchMoviesAsync(MovieCategory.upcoming, count),
+                    CustomCollections = new List<Collection>()
+                };
+
+                if (appUser != null)
+                {
+                    data.CustomCollections = appUser.Collections.ToList();
+
+                }
+                else
+                {
+                    data.CustomCollections = new List<Collection>(); // Initialize an empty list or handle it as per your requirements
+                }
+
+
+
+                ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All" && c.AppUserId == appUserId), "Id", "Name", data.CustomCollections);
+
+                return View(data);
             }
-            else
-            {
-                data.CustomCollections = new List<Collection>(); // Initialize an empty list or handle it as per your requirements
-            }
-
-
-
-            ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All" && c.AppUserId == appUserId), "Id", "Name", data.CustomCollections);
-
-            return View(data);
+            return View();
         }
 
         public IActionResult Privacy()

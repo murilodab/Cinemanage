@@ -1,4 +1,10 @@
-﻿@model Cinemanage.Models.ViewModels.LandingPageVM;
+﻿@using Microsoft.AspNetCore.Identity
+@using Cinemanage.Models.Database
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@model Cinemanage.Models.ViewModels.LandingPageVM;
 
 @{
     ViewData["Title"] = "Cinemanage";
@@ -61,18 +67,22 @@
                                                 </a>
 
                                                 <ul class="dropdown-menu">
+                                                @if (SignInManager.IsSignedIn(User))
+                                                {
                                                     @foreach (var collection in Model.CustomCollections)
                                                     {
                                                         if (!collection.Name.Equals("All"))
                                                         {
-                                                        <li>
-                                                       
-                                                            <a class="dropdown-item" id="collectionButton" data-collectionId="@collection.Id" data-movieId="@movie.id">
-                                                                @collection.Name
-                                                            </a>
-                                                        </li>
+                                                            <li>
+
+                                                                <a class="dropdown-item" id="collectionButton" data-collectionId="@collection.Id" data-movieId="@movie.id">
+                                                                    @collection.Name
+                                                                </a>
+                                                            </li>
                                                         }
                                                     }
+                                                }
+                                                
 
                                                 </ul>
                                             </div>

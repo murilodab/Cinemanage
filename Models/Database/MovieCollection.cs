@@ -9,9 +9,6 @@ namespace Cinemanage.Models.Database
         public int CollectionId {  get; set; }
         public int MovieId {  get; set; }
        
-        [Required]
-        public string? AppUserId { get; set; }
-
         public Collection? Collection { get; set; }
         public Movie? Movie { get; set; }
 

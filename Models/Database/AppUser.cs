@@ -20,7 +20,7 @@ namespace Cinemanage.Models.Database
         public string? FullName { get { return $"{FirstName} {LastName}"; } }
 
         public virtual ICollection<Collection?> Collections { get; set; } = new HashSet<Collection?>();
-        public virtual ICollection<MovieCollection> MovieCollections { get; set; } = new HashSet<MovieCollection>();
+        public virtual ICollection<MovieCollection?> MovieCollections { get; set; } = new HashSet<MovieCollection?>();
 
     }
 }

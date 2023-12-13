@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Cinemanage.Services;
 using Cinemanage.Services.Interfaces;
+using Cinemanage.Models.Database;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 // Add services to the container.
-var connectionString = ConnectionService.GetConnectionString(builder.Configuration) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-
 
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
@@ -22,7 +21,8 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddDefaultUI()
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -42,11 +42,10 @@ builder.Services.AddScoped<IDataMappingService, TMDBMappingService>();
 
 builder.Services.AddSingleton<IImageService, BasicImageService>();
 
+
 var app = builder.Build();
 
-var dataService = app.Services.CreateScope()
-                              .ServiceProvider
-                              .GetRequiredService<SeedService>();
+var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedService>();
 
 await dataService.ManageDataAsync();
 

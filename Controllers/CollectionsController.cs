@@ -11,6 +11,7 @@ using Cinemanage.Models.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Reflection.Metadata;
 
 namespace Cinemanage.Controllers
 {
@@ -34,21 +35,25 @@ namespace Cinemanage.Controllers
         public async Task<IActionResult> Index()
         {
 
-            string appUserId = _userManager.GetUserId(User);
+            var applicationDbContext = _context.Collection.Include(b => b.AppUser);
+            
+            return View(await applicationDbContext.ToListAsync());
 
-            AppUser? appUser = _context.Users
-                                       .Include(c => c.Collections)
-                                       .ThenInclude(c => c.MovieCollections)
-                                       .FirstOrDefault(u => u.Id == appUserId);
+            //string appUserId = _userManager.GetUserId(User);
 
-            var defaultCollectionName = _appSettings.CinemanageSettings.DefaultCollection.Name;
+            //AppUser? appUser = _context.Users
+            //                           .Include(c => c.Collections)
+            //                           .ThenInclude(c => c.MovieCollections)
+            //                           .FirstOrDefault(u => u.Id == appUserId);
 
-            var collections = await _context.Collection.Where(c => c.AppUserId == appUserId)
-                                                       .Include(c => c.Name != defaultCollectionName)
-                                                       .ToListAsync();
+            //var defaultCollectionName = _appSettings.CinemanageSettings.DefaultCollection.Name;
+
+            //var collections = await _context.Collection.Include(c => c.AppUser)
+            //                                           .Where(c => c.Name != defaultCollectionName)                                                  
+            //                                           .ToListAsync();
             
             
-            return View(collections);
+            //return View(collections);
         }
 
        
@@ -88,21 +93,20 @@ namespace Cinemanage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,AppUserId")] Collection collection)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Collection collection)
         {
-            ModelState.Remove("AppUserId");
+          
 
             if (ModelState.IsValid)
             {
-                string appUserId = _userManager.GetUserId(User);
-                collection.AppUserId = appUserId;
-
+                collection.AppUserId = _userManager.GetUserId(User);
 
                 _context.Add(collection);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Collections", new { id = collection.Id });
             }
-
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", collection.AppUserId);
+            
             return View(collection);
         }
 
@@ -116,7 +120,7 @@ namespace Cinemanage.Controllers
 
             string appUserId = _userManager.GetUserId(User);
 
-            var collection = await _context.Collection.Where(c => c.Id == id && c.AppUserId == appUserId)
+            var collection = await _context.Collection.Where(c => c.Id == id && c.AppUser.Id == appUserId)
                                             .FirstOrDefaultAsync();
             
             if (collection == null)
@@ -131,7 +135,7 @@ namespace Cinemanage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description, AppUserId")] Collection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Collection collection)
         {
             if (id != collection.Id)
             {
@@ -148,7 +152,7 @@ namespace Cinemanage.Controllers
                     }
 
                     string appUserId = _userManager.GetUserId(User);
-                    collection.AppUserId = appUserId;
+                    collection.AppUser.Id = appUserId;
 
                     _context.Update(collection);
                     await _context.SaveChangesAsync();
@@ -181,7 +185,7 @@ namespace Cinemanage.Controllers
             string appUserId = _userManager.GetUserId(User);
 
             var collection = await _context.Collection
-                .FirstOrDefaultAsync(m => m.Id == id & m.AppUserId == appUserId);
+                .FirstOrDefaultAsync(m => m.Id == id & m.AppUser.Id == appUserId);
 
             if (collection == null)
             {
@@ -210,7 +214,7 @@ namespace Cinemanage.Controllers
 
             string appUserId = _userManager.GetUserId(User);
 
-            var collection = await _context.Collection.FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
+            var collection = await _context.Collection.FirstOrDefaultAsync(c => c.Id == id && c.AppUser.Id == appUserId);
             
             if (collection != null)
             {

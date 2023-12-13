@@ -47,9 +47,13 @@ namespace Cinemanage.Controllers
             if (appUser != null)
             {
                 data.CustomCollections = appUser.Collections.ToList();
-
             }
-           
+            else
+            {
+                data.CustomCollections = new List<Collection>(); // Initialize an empty list or handle it as per your requirements
+            }
+
+
 
             ViewData["CustomCollections"] = new SelectList(_context.Collection.Where(c => c.Name != "All"), "Id", "Name", data.CustomCollections);
                        

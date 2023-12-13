@@ -23,18 +23,17 @@ namespace Cinemanage.Services
             _roleManager = roleManager;
         }
 
-        public async Task ManageDataAsync()
+        public async Task ManageDataAsync(IServiceProvider svcProvider) //Wrapper
         {
-            await UpdateDatabaseAsync();
+            var dbContextSvc = svcProvider.GetRequiredService<ApplicationDbContext>();
+
+
+            //Migration: This is the programmatic equivalent to Update-Database
+            await dbContextSvc.Database.MigrateAsync();
+            //Create the DB from the Migrations
             await SeedRolesAsync();
             await SeedUsersAsync();
             await SeedCollections();
-        }
-
-
-        private async Task UpdateDatabaseAsync()
-        {
-            await _dbContext.Database.MigrateAsync();
         }
 
         private async Task SeedRolesAsync()

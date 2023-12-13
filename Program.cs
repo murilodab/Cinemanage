@@ -46,9 +46,16 @@ builder.Services.AddSingleton<IImageService, BasicImageService>();
 
 var app = builder.Build();
 
-var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedService>();
+//Using the Custom DataService
+using (var serviceScope = app.Services.CreateScope())
+{
+    var services = serviceScope.ServiceProvider;
+    var dataService = services.GetRequiredService<SeedService>();
+    await dataService.ManageDataAsync(serviceScope.ServiceProvider);
+}
 
-await dataService.ManageDataAsync();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

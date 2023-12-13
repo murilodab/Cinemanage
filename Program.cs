@@ -8,7 +8,7 @@ using Cinemanage.Models.Database;
 using Cinemanage.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = ConnectionHelper.GetConnectionString(builder.Configuration) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = ConnectionHelper.GetConnectionString(builder.Configurat) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 // Add services to the container.
 
@@ -46,13 +46,9 @@ builder.Services.AddSingleton<IImageService, BasicImageService>();
 
 var app = builder.Build();
 
-//Using the Custom DataService
-using (var serviceScope = app.Services.CreateScope())
-{
-    var services = serviceScope.ServiceProvider;
-    var dataService = services.GetRequiredService<SeedService>();
-    await dataService.ManageDataAsync();
-}
+var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedService>();
+
+await dataService.ManageDataAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
